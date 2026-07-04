@@ -3,295 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC - Sistema de Gestión de Coleo (Prototipo Arquitectónico)</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>SGC - Sistema de Gestión de Coleo FEVECO</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Sidebar Navegación -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>SGC - FEVECO</h2>
-            <p>Mesa Técnica Digital v1.0</p>
+<div id="toast-container"></div>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 width="800px" height="800px" viewBox="0 0 29.791 29.791"
+	 xml:space="preserve">
+<g>
+	<g>
+		<path d="M23.456,9.531c0.722-1.352,2.168-5.081-1.539-8.386c2.429,5.516-3.716,7.132-3.716,7.132l5.35,5.906
+			c0,0,4.848,0.334,6.24-2.341C28.913,11.104,26.094,10.229,23.456,9.531z"/>
+		<path d="M7.876,1.146c-3.707,3.305-2.261,7.032-1.54,8.386C3.696,10.229,0.878,11.104,0,11.844c1.394,2.675,6.24,2.341,6.24,2.341
+			l5.35-5.906C11.59,8.277,5.447,6.662,7.876,1.146z"/>
+		<path d="M8.024,13.625c-1.783,3.379,2.885,7.521,3.569,8.247c0.685,0.727-2.279,1.086-2.26,2.479
+			c0.012,0.836,0.616,1.684,1.931,2.234c-0.014-0.103-0.04-0.198-0.04-0.304c0-0.206,0.069-0.399,0.125-0.596
+			c-0.294-0.195-0.477-0.458-0.43-0.726c0.075-0.426,0.683-0.676,1.352-0.556c0.672,0.117,1.157,0.56,1.081,0.985
+			c-0.022,0.128-0.103,0.232-0.206,0.324c-0.029,0.082-0.08,0.164-0.08,0.246c0,0.66,0.84,1.22,1.832,1.22
+			c0.992,0,1.833-0.56,1.833-1.22c0-0.082-0.051-0.166-0.08-0.248c-0.104-0.09-0.182-0.194-0.205-0.322
+			c-0.075-0.426,0.41-0.868,1.076-0.985c0.674-0.12,1.281,0.13,1.356,0.556c0.047,0.268-0.138,0.529-0.433,0.728
+			c0.057,0.194,0.125,0.39,0.125,0.594c0,0.109-0.025,0.216-0.043,0.321c1.322-0.539,1.93-1.382,1.93-2.253
+			c0-1.448-3.033-1.699-2.253-2.479c0.78-0.779,5.346-4.865,3.563-8.246l-3.566-5.349h-6.61L8.024,13.625z M9.816,15.591
+			c-0.474-0.33-0.482-1.46-0.482-1.46s0.679,0.083,1.271,0.52c0.594,0.435,0.802,1.604,0.978,2.179
+			C11.104,16.044,10.29,15.921,9.816,15.591z M19.188,14.65c0.592-0.437,1.271-0.52,1.271-0.52s-0.009,1.13-0.481,1.46
+			c-0.475,0.33-1.289,0.453-1.767,1.236C18.385,16.253,18.594,15.085,19.188,14.65z"/>
+		<path d="M16.957,25.263c0.137,0.214,0.219,0.449,0.219,0.701c0,0.92-1.019,1.664-2.277,1.664c-1.258,0-2.277-0.744-2.277-1.664
+			c0-0.252,0.082-0.487,0.22-0.701c-0.233-0.104-0.42-0.225-0.56-0.355c-0.381,0.389-0.61,0.862-0.61,1.377
+			c0,1.305,1.443,2.361,3.228,2.361c1.786,0,3.229-1.057,3.229-2.361c0-0.515-0.23-0.988-0.611-1.377
+			C17.375,25.038,17.189,25.161,16.957,25.263z"/>
+	</g>
+</g>
+</svg>
         </div>
-        <ul class="nav-menu">
-            <li class="nav-item active" onclick="switchTab('registro')">1. Registro de Atletas</li>
-            <li class="nav-item" onclick="switchTab('sorteo1')">2. Sorteo Primera Salida</li>
-            <li class="nav-item" onclick="switchTab('computos')">3. Cómputos de Manga</li>
-            <li class="nav-item" onclick="switchTab('sorteodinamico')">4. Sorteo Dinámico (2da)</li>
-        </ul>
-    </div>
-
-    <!-- Contenido Principal -->
-    <div class="main-content">
-        <div class="top-bar">
-            <h1 id="page-title">Registro de Atletas y Ejemplares</h1>
-            <div class="user-badge">Rol: Administrador Técnico</div>
-        </div>
-
-        <div class="content-body">
-            
-            <!-- TAB 1: REGISTRO -->
-            <div id="registro" class="tab-content active">
-                <div class="card">
-                    <div class="card-title">Formulario de Inscripción Oficial</div>
-                    <form onsubmit="event.preventDefault(); addColeador();">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Nombre del Coleador</label>
-                                <input type="text" id="col-nombre" placeholder="Ej. Juan Pérez" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Cédula de Identidad</label>
-                                <input type="text" id="col-cedula" placeholder="V-00.000.000" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Categoría FEVECO</label>
-                                <select id="col-categoria">
-                                    <option>Infantil</option>
-                                    <option selected>Juvenil</option>
-                                    <option>A (Clasificados)</option>
-                                    <option>Veteranos</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Nombre del Equino</label>
-                                <input type="text" id="col-equino" placeholder="Ej. El Relámpago" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Propietario del Equino</label>
-                                <input type="text" id="col-propietario" placeholder="Ej. Ganadería Central" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn">Inscribir Coleador</button>
-                    </form>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Nómina de Coleadores Inscritos</div>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Cédula</th>
-                                    <th>Coleador</th>
-                                    <th>Categoría</th>
-                                    <th>Equino</th>
-                                    <th>Propietario</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-nomina">
-                                <tr>
-                                    <td>V-24.556.112</td>
-                                    <td>Carlos Mendoza</td>
-                                    <td>Juvenil</td>
-                                    <td>Tormenta</td>
-                                    <td>Hacienda Los Toros</td>
-                                </tr>
-                                <tr>
-                                    <td>V-26.889.445</td>
-                                    <td>Luis Alejandro</td>
-                                    <td>Juvenil</td>
-                                    <td>Ciclón</td>
-                                    <td>Stud El Rey</td>
-                                </tr>
-                                <tr>
-                                    <td>V-23.114.778</td>
-                                    <td>Pedro Rodríguez</td>
-                                    <td>Juvenil</td>
-                                    <td>Catatumbo</td>
-                                    <td>Agropecuaria San José</td>
-                                </tr>
-                                <tr>
-                                    <td>V-25.223.990</td>
-                                    <td>Miguel Jiménez</td>
-                                    <td>Juvenil</td>
-                                    <td>General</td>
-                                    <td>Inversiones MJ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: SORTEO 1 -->
-            <div id="sorteo1" class="tab-content">
-                <div class="card">
-                    <div class="card-title">Generación del Sorteo Inicial Estocástico</div>
-                    <div class="alert-info">
-                        <strong>Algoritmo Activo:</strong> Distribución pseudoaleatoria uniforme sin colisiones sobre la nómina consolidada.
-                    </div>
-                    <button class="btn btn-success" onclick="generarSorteoInicial()">Ejecutar Sorteo Aleatorio (Primera Salida)</button>
-                </div>
-
-                <div id="resultados-sorteo-1" style="display:none;">
-                    <div class="card">
-                        <div class="card-title">Distribución de Turnos - Primera Salida</div>
-                        
-                        <div class="turno-block">
-                            <div class="turno-header"><span>TURNO 1</span><span style="color:var(--accent-color);">Manga Oficial</span></div>
-                            <div class="turno-body">
-                                <table>
-                                    <thead><tr><th>Puesto</th><th>Coleador</th><th>Equino</th></tr></thead>
-                                    <tbody>
-                                        <tr><td>1 (Coso)</td><td>Carlos Mendoza</td><td>Tormenta</td></tr>
-                                        <tr><td>2 (Centro)</td><td>Luis Alejandro</td><td>Ciclón</td></tr>
-                                        <tr><td>3 (Tapón)</td><td>Pedro Rodríguez</td><td>Catatumbo</td></tr>
-                                        <tr><td>4 (Puerta)</td><td>Miguel Jiménez</td><td>General</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: CÓMPUTOS -->
-            <div id="computos" class="tab-content">
-                <div class="card">
-                    <div class="card-title">Mesa Técnica - Registro de Cómputos Métricos (Primera Salida)</div>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Coleador / Equino</th>
-                                    <th>Efectivas (E)</th>
-                                    <th>Nulas (N)</th>
-                                    <th>Amonestación (AMON)</th>
-                                    <th>Saque Puerta (SP)</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Carlos Mendoza</strong><br><small style="color:var(--text-light)">Equino: Tormenta</small></td>
-                                    <td><input type="number" id="e-1" value="3" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="n-1" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="a-1" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="sp-1" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="calcularFila(1)">Guardar</button></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Luis Alejandro</strong><br><small style="color:var(--text-light)">Equino: Ciclón</small></td>
-                                    <td><input type="number" id="e-2" value="1" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="n-2" value="1" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="a-2" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="sp-2" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="calcularFila(2)">Guardar</button></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Pedro Rodríguez</strong><br><small style="color:var(--text-light)">Equino: Catatumbo</small></td>
-                                    <td><input type="number" id="e-3" value="4" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="n-3" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="a-3" value="1" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="sp-3" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="calcularFila(3)">Guardar</button></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Miguel Jiménez</strong><br><small style="color:var(--text-light)">Equino: General</small></td>
-                                    <td><input type="number" id="e-4" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="n-4" value="2" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="a-4" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><input type="number" id="sp-4" value="0" style="width:60px; padding:4px;"></td>
-                                    <td><button class="btn" style="padding:4px 8px; font-size:12px;" onclick="calcularFila(4)">Guardar</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Resultados Consolidados de la Primera Salida</div>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Clasificación</th>
-                                    <th>Coleador</th>
-                                    <th>Efectivas</th>
-                                    <th>Nulas</th>
-                                    <th>Amonestaciones</th>
-                                    <th>Puntaje Neto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-totales">
-                                <tr>
-                                    <td><strong>1° Lugar</strong></td>
-                                    <td>Pedro Rodríguez</td>
-                                    <td><span class="badge-metric badge-efectiva">4</span></td>
-                                    <td><span class="badge-metric badge-nula">0</span></td>
-                                    <td><span class="badge-metric badge-amon">1</span></td>
-                                    <td><strong>19.0 Pts</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>2° Lugar</strong></td>
-                                    <td>Carlos Mendoza</td>
-                                    <td><span class="badge-metric badge-efectiva">3</span></td>
-                                    <td><span class="badge-metric badge-nula">0</span></td>
-                                    <td><span class="badge-metric badge-amon">0</span></td>
-                                    <td><strong>15.0 Pts</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>3° Lugar</strong></td>
-                                    <td>Luis Alejandro</td>
-                                    <td><span class="badge-metric badge-efectiva">1</span></td>
-                                    <td><span class="badge-metric badge-nula">1</span></td>
-                                    <td><span class="badge-metric badge-amon">0</span></td>
-                                    <td><strong>3.0 Pts</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>4° Lugar</strong></td>
-                                    <td>Miguel Jiménez</td>
-                                    <td><span class="badge-metric badge-efectiva">0</span></td>
-                                    <td><span class="badge-metric badge-nula">2</span></td>
-                                    <td><span class="badge-metric badge-amon">0</span></td>
-                                    <td><strong>-4.0 Pts</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: SORTEO DINÁMICO -->
-            <div id="sorteodinamico" class="tab-content">
-                <div class="card">
-                    <div class="card-title">Módulo de Sorteo Dinámico Secuencial</div>
-                    <div class="alert-info">
-                        <strong>Algoritmo de Negocio:</strong> Reordenamiento por orden de mérito decreciente (`ORDER BY puntaje DESC`) según directrices de competencia FEVECO. Agrupación por rendimiento acumulado de la Salida 1.
-                    </div>
-                    <button class="btn btn-success" onclick="generarSorteoDinamico()">Generar Turnos de la Segunda Salida</button>
-                </div>
-
-                <div id="resultados-sorteo-dinamico" style="display:none;">
-                    <div class="card">
-                        <div class="card-title">Distribución de Turnos Avanzados (Segunda Salida)</div>
-                        <p style="font-size:13px; color:var(--text-light); margin-bottom:16px;">
-                            *Nota: Los líderes de la tabla acumulan posiciones preferenciales en el sorteo de manga.
-                        </p>
-                        <div class="turno-block" style="border-left: 4px solid var(--success-color);">
-                            <div class="turno-header" style="background-color: #ecfdf5;">
-                                <span>TURNO DE ÉLITE (Líderes de Competencia)</span>
-                                <span style="color:var(--success-color); font-weight:bold;">Salida 2</span>
-                            </div>
-                            <div class="turno-body">
-                                <table>
-                                    <thead><tr><th>Puesto Manga</th><th>Coleador</th><th>Puntaje Previo</th></tr></thead>
-                                    <tbody>
-                                        <tr><td>1 (Coso)</td><td>Pedro Rodríguez</td><td>19.0 Pts</td></tr>
-                                        <tr><td>2 (Centro)</td><td>Carlos Mendoza</td><td>15.0 Pts</td></tr>
-                                        <tr><td>3 (Tapón)</td><td>Luis Alejandro</td><td>3.0 Pts</td></tr>
-                                        <tr><td>4 (Puerta)</td><td>Miguel Jiménez</td><td>-4.0 Pts</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="brand-text">
+            <h2>SGC FEVECO</h2>
+            <span>Mesa Técnica Digital</span>
         </div>
     </div>
-   </body>
+    <ul class="nav-menu">
+        <li class="nav-item active" data-tab="registro">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+            <span>Registro de Atletas</span>
+        </li>
+        <li class="nav-item" data-tab="sorteo1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+            <span>Sorteo Primera Salida</span>
+        </li>
+        <li class="nav-item" data-tab="computos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Cómputos de Manga</span>
+        </li>
+        <li class="nav-item" data-tab="sorteodinamico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Sorteo Dinámico 2da</span>
+        </li>
+        <li class="nav-item" data-tab="estadisticas">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span>Estadísticas</span>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <span>v2.0 — FEVECO</span>
+    </div>
+</div>
+
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main-content">
+    <header class="top-bar">
+        <h1 id="page-title">Registro de Atletas y Ejemplares</h1>
+        <div class="top-bar-right">
+            <span class="live-badge">
+                <span class="live-dot"></span>
+                Mesa Técnica
+            </span>
+        </div>
+    </header>
+
+    <div class="content-body">
+
+        <!-- TAB 1: REGISTRO -->
+        <div id="tab-registro" class="tab-content active">
+            <div class="card">
+                <div class="card-title">
+                    <span>Formulario de Inscripción Oficial</span>
+                    <span class="card-badge">FEVECO</span>
+                </div>
+                <form onsubmit="event.preventDefault(); addColeador();">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre del Coleador</label>
+                            <input type="text" id="col-nombre" placeholder="Ej. Juan Pérez" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Cédula de Identidad</label>
+                            <input type="text" id="col-cedula" placeholder="V-00.000.000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Edad</label>
+                            <input type="number" id="col-edad" placeholder="Ej. 25" min="12" max="99" required oninput="autoCategoria()">
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría FEVECO</label>
+                            <select id="col-categoria">
+                                <option value="Pre-Infantil (12-14)">Pre-Infantil (12-14)</option>
+                                <option value="Infantil (15-17)">Infantil (15-17)</option>
+                                <option value="C (18-23)">C (18-23)</option>
+                                <option value="B (24-31)">B (24-31)</option>
+                                <option value="A (32-39)">A (32-39)</option>
+                                <option value="AA (40-49)">AA (40-49)</option>
+                                <option value="Master (50-59)">Master (50-59)</option>
+                                <option value="Super Master (60+)">Super Master (60+)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre del Equino</label>
+                            <input type="text" id="col-equino" placeholder="Ej. El Relámpago" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Propietario del Equino</label>
+                            <input type="text" id="col-propietario" placeholder="Ej. Ganadería Central" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        Inscribir Coleador
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span>Nómina de Coleadores Inscritos</span>
+                    <span class="badge-count" id="count-nomina">4</span>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cédula</th>
+                                <th>Coleador</th>
+                                <th>Edad</th>
+                                <th>Categoría</th>
+                                <th>Equino</th>
+                                <th>Propietario</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-nomina">
+                            <tr data-id="1">
+                                <td><span class="cedula-badge">V-24.556.112</span></td>
+                                <td><strong>Carlos Mendoza</strong></td>
+                                <td>28</td>
+                                <td><span class="cat-tag cat-b">B (24-31)</span></td>
+                                <td>Tormenta</td>
+                                <td>Hacienda Los Toros</td>
+                                <td><button class="btn-icon delete-btn" onclick="eliminarColeador(this)" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td>
+                            </tr>
+                            <tr data-id="2">
+                                <td><span class="cedula-badge">V-26.889.445</span></td>
+                                <td><strong>Luis Alejandro</strong></td>
+                                <td>22</td>
+                                <td><span class="cat-tag cat-c">C (18-23)</span></td>
+                                <td>Ciclón</td>
+                                <td>Stud El Rey</td>
+                                <td><button class="btn-icon delete-btn" onclick="eliminarColeador(this)" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td>
+                            </tr>
+                            <tr data-id="3">
+                                <td><span class="cedula-badge">V-23.114.778</span></td>
+                                <td><strong>Pedro Rodríguez</strong></td>
+                                <td>35</td>
+                                <td><span class="cat-tag cat-a">A (32-39)</span></td>
+                                <td>Catatumbo</td>
+                                <td>Agropecuaria San José</td>
+                                <td><button class="btn-icon delete-btn" onclick="eliminarColeador(this)" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td>
+                            </tr>
+                            <tr data-id="4">
+                                <td><span class="cedula-badge">V-25.223.990</span></td>
+                                <td><strong>Miguel Jiménez</strong></td>
+                                <td>19</td>
+                                <td><span class="cat-tag cat-c">C (18-23)</span></td>
+                                <td>General</td>
+                                <td>Inversiones MJ</td>
+                                <td><button class="btn-icon delete-btn" onclick="eliminarColeador(this)" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: SORTEO 1 -->
+        <div id="tab-sorteo1" class="tab-content">
+            <div class="card glass">
+                <div class="card-title">
+                    <span>Generación del Sorteo Inicial Estocástico</span>
+                </div>
+                <div class="alert-info">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span><strong>Algoritmo Activo:</strong> Distribución pseudoaleatoria uniforme sin colisiones sobre la nómina consolidada.</span>
+                </div>
+                <button class="btn btn-success" onclick="generarSorteoInicial()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                    Ejecutar Sorteo Aleatorio (Primera Salida)
+                </button>
+            </div>
+
+            <div id="resultados-sorteo-1" class="hidden">
+                <div class="card">
+                    <div class="card-title">
+                        <span>Distribución de Turnos — Primera Salida</span>
+                        <span class="card-badge success-badge">Ejecutado</span>
+                    </div>
+                    <div class="turno-block" id="turno-container-1">
+                        <div class="turno-header">
+                            <span><span class="turno-num">TURNO 1</span> — Manga Oficial</span>
+                            <span class="turno-metric">4 Coleadores</span>
+                        </div>
+                        <div class="turno-body">
+                            <table>
+                                <thead><tr><th>Puesto</th><th>Coleador</th><th>Equino</th></tr></thead>
+                                <tbody>
+                                    <tr><td><span class="puesto-badge coso">1 (Coso)</span></td><td>Carlos Mendoza</td><td>Tormenta</td></tr>
+                                    <tr><td><span class="puesto-badge centro">2 (Centro)</span></td><td>Luis Alejandro</td><td>Ciclón</td></tr>
+                                    <tr><td><span class="puesto-badge tapon">3 (Tapón)</span></td><td>Pedro Rodríguez</td><td>Catatumbo</td></tr>
+                                    <tr><td><span class="puesto-badge puerta">4 (Puerta)</span></td><td>Miguel Jiménez</td><td>General</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: CÓMPUTOS -->
+        <div id="tab-computos" class="tab-content">
+            <div class="card">
+                <div class="card-title">
+                    <span>Mesa Técnica — Registro de Cómputos</span>
+                    <span class="card-badge">Primera Salida</span>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Coleador / Equino</th>
+                                <th>Efectivas (E)</th>
+                                <th>Nulas (N)</th>
+                                <th>Amonestación</th>
+                                <th>Saque Puerta</th>
+                                <th>Puntaje</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-comp-id="1">
+                                <td><strong>Carlos Mendoza</strong><br><small class="equino-sub">Equino: Tormenta</small></td>
+                                <td><input type="number" class="comp-input e-input" id="e-1" value="3" min="0"></td>
+                                <td><input type="number" class="comp-input n-input" id="n-1" value="0" min="0"></td>
+                                <td><input type="number" class="comp-input a-input" id="a-1" value="0" min="0"></td>
+                                <td><input type="number" class="comp-input sp-input" id="sp-1" value="0" min="0"></td>
+                                <td><span class="puntaje-display" id="p-1">15.0</span></td>
+                                <td><button class="btn btn-sm" onclick="guardarComputo(1)">Guardar</button></td>
+                            </tr>
+                            <tr data-comp-id="2">
+                                <td><strong>Luis Alejandro</strong><br><small class="equino-sub">Equino: Ciclón</small></td>
+                                <td><input type="number" class="comp-input e-input" id="e-2" value="1" min="0"></td>
+                                <td><input type="number" class="comp-input n-input" id="n-2" value="1" min="0"></td>
+                                <td><input type="number" class="comp-input a-input" id="a-2" value="0" min="0"></td>
+                                <td><input type="number" class="comp-input sp-input" id="sp-2" value="0" min="0"></td>
+                                <td><span class="puntaje-display" id="p-2">3.0</span></td>
+                                <td><button class="btn btn-sm" onclick="guardarComputo(2)">Guardar</button></td>
+                            </tr>
+                            <tr data-comp-id="3">
+                                <td><strong>Pedro Rodríguez</strong><br><small class="equino-sub">Equino: Catatumbo</small></td>
+                                <td><input type="number" class="comp-input e-input" id="e-3" value="4" min="0"></td>
+                                <td><input type="number" class="comp-input n-input" id="n-3" value="0" min="0"></td>
+                                <td><input type="number" class="comp-input a-input" id="a-3" value="1" min="0"></td>
+                                <td><input type="number" class="comp-input sp-input" id="sp-3" value="0" min="0"></td>
+                                <td><span class="puntaje-display" id="p-3">19.0</span></td>
+                                <td><button class="btn btn-sm" onclick="guardarComputo(3)">Guardar</button></td>
+                            </tr>
+                            <tr data-comp-id="4">
+                                <td><strong>Miguel Jiménez</strong><br><small class="equino-sub">Equino: General</small></td>
+                                <td><input type="number" class="comp-input e-input" id="e-4" value="0" min="0"></td>
+                                <td><input type="number" class="comp-input n-input" id="n-4" value="2" min="0"></td>
+                                <td><input type="number" class="comp-input a-input" id="a-4" value="0" min="0"></td>
+                                <td><input type="number" class="comp-input sp-input" id="sp-4" value="0" min="0"></td>
+                                <td><span class="puntaje-display" id="p-4">-4.0</span></td>
+                                <td><button class="btn btn-sm" onclick="guardarComputo(4)">Guardar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span>Tabla de Clasificación — Primera Salida</span>
+                    <span class="card-badge success-badge">En Vivo</span>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Coleador</th>
+                                <th>Efectivas</th>
+                                <th>Nulas</th>
+                                <th>Amon.</th>
+                                <th>S.P.</th>
+                                <th>Puntaje Neto</th>
+                                <th>Efectividad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-totales">
+                            <tr class="pos-1">
+                                <td><span class="pos-badge gold">1</span></td>
+                                <td><strong>Pedro Rodríguez</strong></td>
+                                <td><span class="metric-badge e-badge">4</span></td>
+                                <td><span class="metric-badge n-badge">0</span></td>
+                                <td><span class="metric-badge a-badge">1</span></td>
+                                <td><span class="metric-badge sp-badge">0</span></td>
+                                <td><strong class="pts-gold">19.0</strong></td>
+                                <td><span class="eff-badge">100%</span></td>
+                            </tr>
+                            <tr class="pos-2">
+                                <td><span class="pos-badge silver">2</span></td>
+                                <td><strong>Carlos Mendoza</strong></td>
+                                <td><span class="metric-badge e-badge">3</span></td>
+                                <td><span class="metric-badge n-badge">0</span></td>
+                                <td><span class="metric-badge a-badge">0</span></td>
+                                <td><span class="metric-badge sp-badge">0</span></td>
+                                <td><strong class="pts-silver">15.0</strong></td>
+                                <td><span class="eff-badge">100%</span></td>
+                            </tr>
+                            <tr class="pos-3">
+                                <td><span class="pos-badge bronze">3</span></td>
+                                <td><strong>Luis Alejandro</strong></td>
+                                <td><span class="metric-badge e-badge">1</span></td>
+                                <td><span class="metric-badge n-badge">1</span></td>
+                                <td><span class="metric-badge a-badge">0</span></td>
+                                <td><span class="metric-badge sp-badge">0</span></td>
+                                <td><strong class="pts-bronze">3.0</strong></td>
+                                <td><span class="eff-badge eff-low">50%</span></td>
+                            </tr>
+                            <tr class="pos-4">
+                                <td><span class="pos-badge">4</span></td>
+                                <td><strong>Miguel Jiménez</strong></td>
+                                <td><span class="metric-badge e-badge">0</span></td>
+                                <td><span class="metric-badge n-badge">2</span></td>
+                                <td><span class="metric-badge a-badge">0</span></td>
+                                <td><span class="metric-badge sp-badge">0</span></td>
+                                <td><strong style="color:#ef4444;">-4.0</strong></td>
+                                <td><span class="eff-badge eff-zero">0%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: SORTEO DINÁMICO -->
+        <div id="tab-sorteodinamico" class="tab-content">
+            <div class="card glass">
+                <div class="card-title">
+                    <span>Módulo de Sorteo Dinámico Secuencial</span>
+                </div>
+                <div class="alert-info">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span><strong>Algoritmo de Negocio:</strong> Reordenamiento por orden de mérito decreciente según directrices FEVECO. Agrupación por rendimiento acumulado.</span>
+                </div>
+                <button class="btn btn-success" onclick="generarSorteoDinamico()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Generar Turnos de la Segunda Salida
+                </button>
+            </div>
+
+            <div id="resultados-sorteo-dinamico" class="hidden">
+                <div class="card">
+                    <div class="card-title">
+                        <span>Distribución de Turnos Avanzados — Segunda Salida</span>
+                        <span class="card-badge success-badge">Meritocracia</span>
+                    </div>
+                    <p class="info-note">* Los líderes de la tabla acumulan posiciones preferenciales en el sorteo de manga.</p>
+                    <div class="turno-block elite-block">
+                        <div class="turno-header elite-header">
+                            <span><span class="turno-num">TURNO DE ÉLITE</span> — Líderes de Competencia</span>
+                            <span class="turno-metric">Salida 2</span>
+                        </div>
+                        <div class="turno-body">
+                            <table>
+                                <thead><tr><th>Puesto Manga</th><th>Coleador</th><th>Puntaje Previo</th></tr></thead>
+                                <tbody>
+                                    <tr><td><span class="puesto-badge coso">1 (Coso)</span></td><td>Pedro Rodríguez</td><td><strong class="pts-gold">19.0 Pts</strong></td></tr>
+                                    <tr><td><span class="puesto-badge centro">2 (Centro)</span></td><td>Carlos Mendoza</td><td><strong class="pts-silver">15.0 Pts</strong></td></tr>
+                                    <tr><td><span class="puesto-badge tapon">3 (Tapón)</span></td><td>Luis Alejandro</td><td><strong class="pts-bronze">3.0 Pts</strong></td></tr>
+                                    <tr><td><span class="puesto-badge puerta">4 (Puerta)</span></td><td>Miguel Jiménez</td><td><strong style="color:#ef4444;">-4.0 Pts</strong></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: ESTADÍSTICAS -->
+        <div id="tab-estadisticas" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-coleadores">4</span>
+                        <span class="stat-label">Coleadores Registrados</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-green">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-efectivas">8</span>
+                        <span class="stat-label">Coleadas Efectivas</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-red">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-nulas">3</span>
+                        <span class="stat-label">Coleadas Nulas</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-yellow">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-sp">0</span>
+                        <span class="stat-label">Saques de Puerta</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-purple">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-efectividad">72.7<span class="stat-unit">%</span></span>
+                        <span class="stat-label">Efectividad Global</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-orange">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="stat-promedio">8.25</span>
+                        <span class="stat-label">Promedio por Coleador</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span>Ranking General de Coleadores</span>
+                    <span class="card-badge">Clasificación FEVECO</span>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Coleador</th>
+                                <th>Categoría</th>
+                                <th>CE</th>
+                                <th>CN</th>
+                                <th>SP</th>
+                                <th>AM</th>
+                                <th>Puntaje</th>
+                                <th>Efectividad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-ranking">
+                            <tr class="pos-1">
+                                <td><span class="pos-badge gold">1</span></td>
+                                <td><strong>Pedro Rodríguez</strong></td>
+                                <td><span class="cat-tag cat-a">A (32-39)</span></td>
+                                <td>4</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td><strong class="pts-gold">19.0</strong></td>
+                                <td><span class="eff-badge">100%</span></td>
+                            </tr>
+                            <tr class="pos-2">
+                                <td><span class="pos-badge silver">2</span></td>
+                                <td><strong>Carlos Mendoza</strong></td>
+                                <td><span class="cat-tag cat-b">B (24-31)</span></td>
+                                <td>3</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td><strong class="pts-silver">15.0</strong></td>
+                                <td><span class="eff-badge">100%</span></td>
+                            </tr>
+                            <tr class="pos-3">
+                                <td><span class="pos-badge bronze">3</span></td>
+                                <td><strong>Luis Alejandro</strong></td>
+                                <td><span class="cat-tag cat-c">C (18-23)</span></td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td><strong class="pts-bronze">3.0</strong></td>
+                                <td><span class="eff-badge eff-low">50%</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="pos-badge">4</span></td>
+                                <td><strong>Miguel Jiménez</strong></td>
+                                <td><span class="cat-tag cat-c">C (18-23)</span></td>
+                                <td>0</td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td><strong style="color:#ef4444;">-4.0</strong></td>
+                                <td><span class="eff-badge eff-zero">0%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="script.js?v=2"></script>
+</body>
 </html>
