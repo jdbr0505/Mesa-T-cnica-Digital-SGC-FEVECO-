@@ -1,10 +1,14 @@
+// 1. Importar la Base de Datos y los métodos de Firestore
+import { db } from './firebase-config.js';
+import { collection, addDoc, onSnapshot, doc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// Constantes de Puntuación FEVECO
 const PTS_EFECTIVA = 5;
 const PTS_NULA = -2;
 const PTS_AMONESTACION = -1;
 const PTS_SP = 3;
 
-let coleadorIdCounter = 5;
-
+// Sistema de Notificaciones (Toasts)
 function mostrarToast(mensaje, tipo) {
     const container = document.getElementById('toast-container');
     const icons = {
@@ -25,6 +29,7 @@ function mostrarToast(mensaje, tipo) {
     }, 4000);
 }
 
+// Control de Interfaz
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('overlay').classList.toggle('show');
@@ -35,9 +40,11 @@ function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     document.getElementById(`tab-${tabId}`).classList.add('active');
+    
     const items = document.querySelectorAll('.nav-item');
     const tabMap = { registro: 0, sorteo1: 1, computos: 2, sorteodinamico: 3, estadisticas: 4 };
     if (tabMap[tabId] !== undefined) items[tabMap[tabId]].classList.add('active');
+    
     const titles = {
         registro: 'Registro de Atletas y Ejemplares',
         sorteo1: 'Generador Estocástico — Sorteo 1',
@@ -46,7 +53,6 @@ function switchTab(tabId) {
         estadisticas: 'Panel de Estadísticas FEVECO'
     };
     document.getElementById('page-title').innerText = titles[tabId] || 'SGC FEVECO';
-    if (tabId === 'estadisticas') actualizarEstadisticas();
     if (document.querySelector('.sidebar.open')) toggleSidebar();
 }
 
@@ -69,57 +75,68 @@ function autoCategoria() {
         [60, 99, 'Super Master (60+)']
     ];
     for (const [min, max, label] of cats) {
-        if (edad >= min && edad <= max) {
-            select.value = label;
-            return;
-        }
+        if (edad >= min && edad <= max) { select.value = label; return; }
     }
 }
 
-function addColeador() {
+// 2. Base de Datos CRUD
+async function addColeador() {
     const name = document.getElementById('col-nombre').value.trim();
     const cedula = document.getElementById('col-cedula').value.trim();
     const edad = document.getElementById('col-edad').value;
     const cat = document.getElementById('col-categoria').value;
     const equino = document.getElementById('col-equino').value.trim();
     const prop = document.getElementById('col-propietario').value.trim();
+    
     if (!name || !cedula || !edad || !equino || !prop) {
         mostrarToast('Complete todos los campos obligatorios.', 'warning');
         return;
     }
-    const tbody = document.getElementById('tabla-nomina');
-    const tr = document.createElement('tr');
-    tr.dataset.id = coleadorIdCounter++;
-    tr.innerHTML = `
-        <td><span class="cedula-badge">${escHtml(cedula)}</span></td>
-        <td><strong>${escHtml(name)}</strong></td>
-        <td>${escHtml(edad)}</td>
-        <td><span class="cat-tag ${catClass(cat)}">${escHtml(cat)}</span></td>
-        <td>${escHtml(equino)}</td>
-        <td>${escHtml(prop)}</td>
-        <td><button class="btn-icon delete-btn" onclick="eliminarColeador(this)" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td>
-    `;
-    tbody.appendChild(tr);
-    document.getElementById('col-nombre').value = '';
-    document.getElementById('col-cedula').value = '';
-    document.getElementById('col-edad').value = '';
-    document.getElementById('col-equino').value = '';
-    document.getElementById('col-propietario').value = '';
-    actualizarContador();
-    mostrarToast(`${name} inscrito exitosamente en la nómina.`, 'success');
+    
+    try {
+        await addDoc(collection(db, "coleadores"), {
+            nombre: name,
+            cedula: cedula,
+            edad: edad,
+            categoria: cat,
+            equino: equino,
+            propietario: prop,
+            fecha_registro: serverTimestamp()
+        });
+
+        document.getElementById('col-nombre').value = '';
+        document.getElementById('col-cedula').value = '';
+        document.getElementById('col-edad').value = '';
+        document.getElementById('col-equino').value = '';
+        document.getElementById('col-propietario').value = '';
+        
+        mostrarToast(`${name} guardado en la Base de Datos.`, 'success');
+    } catch (error) {
+        console.error(error);
+        mostrarToast('Error al conectar con la Nube.', 'error');
+    }
 }
 
-function eliminarColeador(btn) {
+async function eliminarColeador(btn) {
     const tr = btn.closest('tr');
+    const docId = tr.dataset.id;
     const name = tr.querySelector('td:nth-child(2)').textContent.trim();
-    tr.remove();
-    actualizarContador();
-    mostrarToast(`${name} eliminado de la nómina.`, 'info');
+    
+    if (!confirm(`¿Estás seguro de eliminar a ${name}?`)) return;
+
+    try {
+        await deleteDoc(doc(db, "coleadores", docId));
+        mostrarToast(`${name} eliminado.`, 'info');
+    } catch (error) {
+        console.error(error);
+        mostrarToast('Error al eliminar.', 'error');
+    }
 }
 
+// Funciones Auxiliares UI
 function actualizarContador() {
-    const rows = document.querySelectorAll('#tabla-nomina tr');
-    document.getElementById('count-nomina').textContent = rows.length;
+    const count = document.querySelectorAll('#tabla-nomina tr').length;
+    document.getElementById('count-nomina').textContent = count;
 }
 
 function catClass(cat) {
@@ -133,65 +150,131 @@ function catClass(cat) {
     if (cat.includes('Super')) return 'cat-supermaster';
     return 'cat-c';
 }
-
 function escHtml(str) {
     const d = document.createElement('div');
     d.textContent = str;
     return d.innerHTML;
 }
 
+// --- ALGORITMOS DE SORTEOS ---
 function generarSorteoInicial() {
-    document.getElementById('resultados-sorteo-1').classList.remove('hidden');
     const tbody = document.getElementById('tabla-nomina');
     const rows = Array.from(tbody.querySelectorAll('tr'));
     if (rows.length === 0) {
-        mostrarToast('No hay coleadores inscritos para sortear.', 'warning');
+        mostrarToast('No hay coleadores inscritos.', 'warning');
         return;
     }
+    
+    document.getElementById('resultados-sorteo-1').classList.remove('hidden');
+    
+    // Algoritmo de Barajado (Fisher-Yates)
     const shuffled = [...rows];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
+
     const puestoLabels = ['coso', 'centro', 'tapon', 'puerta'];
-    const container = document.getElementById('turno-container-1');
-    let html = `<div class="turno-header"><span><span class="turno-num">TURNO 1</span> — Manga Oficial</span><span class="turno-metric">${shuffled.length} Coleadores</span></div><div class="turno-body"><table><thead><tr><th>Puesto</th><th>Coleador</th><th>Equino</th></tr></thead><tbody>`;
-    shuffled.forEach((row, i) => {
-        const cols = row.querySelectorAll('td');
-        const name = cols[1] ? cols[1].textContent.trim() : '—';
-        const equino = cols[4] ? cols[4].textContent.trim() : '—';
-        const puesto = puestoLabels[i] || 'puesto';
-        html += `<tr><td><span class="puesto-badge ${puesto}">${i + 1} (${puestoLabels[i] || 'Puesto'})</span></td><td>${name}</td><td>${equino}</td></tr>`;
-    });
-    html += '</tbody></table></div>';
-    container.innerHTML = html;
-    mostrarToast(`Sorteo ejecutado: ${shuffled.length} coleadores distribuidos aleatoriamente.`, 'success');
+    let html = '';
+    
+    // Agrupar en turnos de 4
+    for(let i=0; i < shuffled.length; i+=4) {
+        let turnoNum = Math.floor(i/4) + 1;
+        let grupo = shuffled.slice(i, i+4);
+        
+        html += `<div class="turno-block">
+            <div class="turno-header"><span><span class="turno-num">TURNO ${turnoNum}</span> — Manga Oficial</span><span class="turno-metric">${grupo.length} Coleadores</span></div>
+            <div class="turno-body"><table><thead><tr><th>Puesto</th><th>Coleador</th><th>Equino</th></tr></thead><tbody>`;
+            
+        grupo.forEach((row, index) => {
+            const cols = row.querySelectorAll('td');
+            const name = cols[1] ? cols[1].textContent.trim() : '—';
+            const equino = cols[4] ? cols[4].textContent.trim() : '—';
+            const puestoClase = puestoLabels[index] || 'coso';
+            const puestoNombre = (index === 0) ? '1 (Coso)' : (index === 1) ? '2 (Centro)' : (index === 2) ? '3 (Tapón)' : '4 (Puerta)';
+            html += `<tr><td><span class="puesto-badge ${puestoClase}">${puestoNombre}</span></td><td>${name}</td><td>${equino}</td></tr>`;
+        });
+        html += '</tbody></table></div></div>';
+    }
+    
+    document.getElementById('turno-container-1').innerHTML = html;
+    mostrarToast(`Sorteo estocástico generado con éxito.`, 'success');
 }
 
 function generarSorteoDinamico() {
+    const filasRanking = Array.from(document.querySelectorAll('#tabla-ranking tr'));
+    if(filasRanking.length === 0) {
+        mostrarToast('Debe haber cómputos guardados para el sorteo dinámico.', 'warning');
+        return;
+    }
+
     document.getElementById('resultados-sorteo-dinamico').classList.remove('hidden');
+    const puestoLabels = ['coso', 'centro', 'tapon', 'puerta'];
+    let html = '';
+
+    // Agrupar de 4 en 4 (Ya vienen ordenados del Ranking General)
+    for(let i=0; i < filasRanking.length; i+=4) {
+        let turnoNum = Math.floor(i/4) + 1;
+        let grupo = filasRanking.slice(i, i+4);
+        let esElite = (turnoNum === 1) ? 'elite-block' : '';
+        let headerElite = (turnoNum === 1) ? 'elite-header' : '';
+        let titulo = (turnoNum === 1) ? 'TURNO DE ÉLITE' : `TURNO ${turnoNum}`;
+
+        html += `<div class="turno-block ${esElite}">
+            <div class="turno-header ${headerElite}"><span><span class="turno-num">${titulo}</span></span><span class="turno-metric">Salida 2</span></div>
+            <div class="turno-body"><table><thead><tr><th>Puesto</th><th>Coleador</th><th>Puntaje Previo</th></tr></thead><tbody>`;
+
+        grupo.forEach((row, index) => {
+            const cols = row.querySelectorAll('td');
+            const name = cols[1].textContent.trim();
+            const ptsHTML = cols[7].innerHTML; // Trae el strong con color
+            
+            const puestoClase = puestoLabels[index] || 'coso';
+            const puestoNombre = (index === 0) ? '1 (Coso)' : (index === 1) ? '2 (Centro)' : (index === 2) ? '3 (Tapón)' : '4 (Puerta)';
+            
+            html += `<tr><td><span class="puesto-badge ${puestoClase}">${puestoNombre}</span></td><td>${name}</td><td>${ptsHTML} Pts</td></tr>`;
+        });
+        html += '</tbody></table></div></div>';
+    }
+    document.getElementById('turno-container-dinamico').innerHTML = html;
     mostrarToast('Sorteo dinámico generado por orden de mérito.', 'success');
 }
 
+// --- MESA TÉCNICA Y CÓMPUTOS ---
 function calcularPuntaje(e, n, a, sp) {
     return (e * PTS_EFECTIVA) + (n * PTS_NULA) + (a * PTS_AMONESTACION) + (sp * PTS_SP);
 }
 
+function reasignarListenersInputs() {
+    document.querySelectorAll('.comp-input').forEach(input => {
+        input.addEventListener('input', function () {
+            const tr = this.closest('tr[data-comp-id]');
+            if (!tr) return;
+            const id = tr.dataset.compId;
+            const e = parseInt(document.getElementById(`e-${id}`).value) || 0;
+            const n = parseInt(document.getElementById(`n-${id}`).value) || 0;
+            const a_val = parseInt(document.getElementById(`a-${id}`).value) || 0;
+            const sp = parseInt(document.getElementById(`sp-${id}`).value) || 0;
+            
+            const pts = calcularPuntaje(e, n, a_val, sp);
+            const display = document.getElementById(`p-${id}`);
+            if(display) {
+                display.textContent = pts.toFixed(1);
+                display.style.color = pts < 0 ? '#ef4444' : pts > 0 ? '#059669' : 'inherit';
+            }
+        });
+    });
+}
+
 function guardarComputo(id) {
-    const e = parseInt(document.getElementById(`e-${id}`).value) || 0;
-    const n = parseInt(document.getElementById(`n-${id}`).value) || 0;
-    const a = parseInt(document.getElementById(`a-${id}`).value) || 0;
-    const sp = parseInt(document.getElementById(`sp-${id}`).value) || 0;
-    const pts = calcularPuntaje(e, n, a, sp);
-    document.getElementById(`p-${id}`).textContent = pts.toFixed(1);
-    document.getElementById(`p-${id}`).style.color = pts < 0 ? '#ef4444' : pts > 0 ? '#059669' : 'inherit';
     actualizarTablaTotales();
-    mostrarToast(`Cómputos guardados — Puntaje: ${pts.toFixed(1)} pts`, 'success');
+    const e = document.getElementById(`e-${id}`).value || 0;
+    mostrarToast(`Cómputos guardados en memoria local para esta manga.`, 'success');
 }
 
 function actualizarTablaTotales() {
     const data = [];
-    document.querySelectorAll('#tab-computos tbody tr[data-comp-id]').forEach(tr => {
+    document.querySelectorAll('#tabla-computos-body tr[data-comp-id]').forEach(tr => {
         const id = tr.dataset.compId;
         const name = tr.querySelector('td strong').textContent.trim();
         const e = parseInt(document.getElementById(`e-${id}`).value) || 0;
@@ -203,9 +286,12 @@ function actualizarTablaTotales() {
         const efectividad = totalIntentos > 0 ? Math.round((e / totalIntentos) * 100) : 0;
         data.push({ id, name, e, n, a: a_val, sp, pts, efectividad });
     });
+    
+    // Ordenar de mayor a menor puntaje
     data.sort((a, b) => b.pts - a.pts);
     const tbody = document.getElementById('tabla-totales');
     const medals = ['gold', 'silver', 'bronze'];
+    
     tbody.innerHTML = data.map((d, i) => {
         const medalClass = medals[i] || '';
         const ptsColor = d.pts < 0 ? 'style="color:#ef4444;"' : d.pts > 0 ? 'class="pts-gold"' : '';
@@ -222,74 +308,69 @@ function actualizarTablaTotales() {
             <td><span class="eff-badge ${effClass}">${d.efectividad}%</span></td>
         </tr>`;
     }).join('');
+    
+    // Al actualizar los totales, también disparamos la actualización del panel de estadísticas y ranking
     actualizarEstadisticas();
 }
 
-document.querySelectorAll('.comp-input').forEach(input => {
-    input.addEventListener('input', function () {
-        const tr = this.closest('tr[data-comp-id]');
-        if (!tr) return;
-        const id = tr.dataset.compId;
-        const e = parseInt(document.getElementById(`e-${id}`).value) || 0;
-        const n = parseInt(document.getElementById(`n-${id}`).value) || 0;
-        const a_val = parseInt(document.getElementById(`a-${id}`).value) || 0;
-        const sp = parseInt(document.getElementById(`sp-${id}`).value) || 0;
-        const pts = calcularPuntaje(e, n, a_val, sp);
-        const display = document.getElementById(`p-${id}`);
-        display.textContent = pts.toFixed(1);
-        display.style.color = pts < 0 ? '#ef4444' : pts > 0 ? '#059669' : 'inherit';
-    });
-});
-
 function actualizarEstadisticas() {
-    const compRows = document.querySelectorAll('#tab-computos tbody tr[data-comp-id]');
+    const compRows = document.querySelectorAll('#tabla-computos-body tr[data-comp-id]');
     let totalE = 0, totalN = 0, totalA = 0, totalSP = 0, totalPts = 0;
+    
     compRows.forEach(tr => {
         const id = tr.dataset.compId;
-        const e = parseInt(document.getElementById(`e-${id}`).value) || 0;
-        const n = parseInt(document.getElementById(`n-${id}`).value) || 0;
-        const a_val = parseInt(document.getElementById(`a-${id}`).value) || 0;
-        const sp = parseInt(document.getElementById(`sp-${id}`).value) || 0;
+        const e = parseInt(document.getElementById(`e-${id}`)?.value) || 0;
+        const n = parseInt(document.getElementById(`n-${id}`)?.value) || 0;
+        const a_val = parseInt(document.getElementById(`a-${id}`)?.value) || 0;
+        const sp = parseInt(document.getElementById(`sp-${id}`)?.value) || 0;
         totalE += e; totalN += n; totalA += a_val; totalSP += sp;
         totalPts += calcularPuntaje(e, n, a_val, sp);
     });
+    
     const totalInt = totalE + totalN;
     const efectividad = totalInt > 0 ? ((totalE / totalInt) * 100).toFixed(1) : '0.0';
-    const numColeadores = compRows.length || document.querySelectorAll('#tabla-nomina tr').length;
+    const numColeadores = document.querySelectorAll('#tabla-nomina tr').length;
     const promedio = numColeadores > 0 ? (totalPts / numColeadores).toFixed(2) : '0.00';
 
     document.getElementById('stat-coleadores').textContent = numColeadores;
     document.getElementById('stat-efectivas').textContent = totalE;
     document.getElementById('stat-nulas').textContent = totalN;
     document.getElementById('stat-sp').textContent = totalSP;
+    
     const effSpan = document.getElementById('stat-efectividad');
     effSpan.innerHTML = `${efectividad}<span class="stat-unit">%</span>`;
     document.getElementById('stat-promedio').textContent = promedio;
 
     const nominaRows = document.querySelectorAll('#tabla-nomina tr');
     const rankingData = [];
+    
     nominaRows.forEach(tr => {
         const cols = tr.querySelectorAll('td');
         const name = cols[1] ? cols[1].textContent.trim() : '—';
         const cat = cols[3] ? cols[3].textContent.trim() : '—';
         const id = tr.dataset.id;
-        const compTr = document.querySelector(`#tab-computos tr[data-comp-id="${id}"]`);
+        
         let e = 0, n = 0, a_val = 0, sp = 0;
-        if (compTr) {
-            const cid = compTr.dataset.compId;
-            e = parseInt(document.getElementById(`e-${cid}`).value) || 0;
-            n = parseInt(document.getElementById(`n-${cid}`).value) || 0;
-            a_val = parseInt(document.getElementById(`a-${cid}`).value) || 0;
-            sp = parseInt(document.getElementById(`sp-${cid}`).value) || 0;
+        
+        // Buscar si este ID tiene valores en los inputs de cómputo
+        const inputE = document.getElementById(`e-${id}`);
+        if(inputE) {
+            e = parseInt(inputE.value) || 0;
+            n = parseInt(document.getElementById(`n-${id}`).value) || 0;
+            a_val = parseInt(document.getElementById(`a-${id}`).value) || 0;
+            sp = parseInt(document.getElementById(`sp-${id}`).value) || 0;
         }
+        
         const pts = calcularPuntaje(e, n, a_val, sp);
         const totalInt2 = e + n;
         const eff = totalInt2 > 0 ? Math.round((e / totalInt2) * 100) : 0;
         rankingData.push({ name, cat, e, n, a: a_val, sp, pts, eff });
     });
+    
     rankingData.sort((a, b) => b.pts - a.pts);
     const medals2 = ['gold', 'silver', 'bronze'];
     const tbodyRank = document.getElementById('tabla-ranking');
+    
     tbodyRank.innerHTML = rankingData.map((d, i) => {
         const mClass = medals2[i] || '';
         const ptsColor = d.pts < 0 ? 'style="color:#ef4444;"' : d.pts > 0 ? 'class="pts-gold"' : '';
@@ -306,22 +387,90 @@ function actualizarEstadisticas() {
     }).join('');
 }
 
+// 4. INICIALIZADOR GLOBAL y Escuchador de Firebase
 function inicializar() {
-    actualizarContador();
-    document.querySelectorAll('.comp-input').forEach(input => {
-        const tr = input.closest('tr[data-comp-id]');
-        if (tr) {
-            const id = tr.dataset.compId;
-            const e = parseInt(document.getElementById(`e-${id}`).value) || 0;
-            const n = parseInt(document.getElementById(`n-${id}`).value) || 0;
-            const a_val = parseInt(document.getElementById(`a-${id}`).value) || 0;
-            const sp = parseInt(document.getElementById(`sp-${id}`).value) || 0;
-            const pts = calcularPuntaje(e, n, a_val, sp);
-            const display = document.getElementById(`p-${id}`);
-            display.textContent = pts.toFixed(1);
-            display.style.color = pts < 0 ? '#ef4444' : pts > 0 ? '#059669' : 'inherit';
+    onSnapshot(collection(db, "coleadores"), (snapshot) => {
+        const tbodyNomina = document.getElementById('tabla-nomina');
+        const tbodyComputos = document.getElementById('tabla-computos-body');
+        
+        // Guardar valores actuales de los inputs para no borrarlos al actualizar la tabla
+        let valoresActuales = {};
+        if (tbodyComputos) {
+            tbodyComputos.querySelectorAll('tr').forEach(tr => {
+                let id = tr.dataset.compId;
+                valoresActuales[id] = {
+                    e: document.getElementById(`e-${id}`)?.value || "0",
+                    n: document.getElementById(`n-${id}`)?.value || "0",
+                    a: document.getElementById(`a-${id}`)?.value || "0",
+                    sp: document.getElementById(`sp-${id}`)?.value || "0"
+                };
+            });
+        }
+
+        tbodyNomina.innerHTML = '';
+        let computosHTML = '';
+        
+        snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            const id = docSnap.id; 
+            
+            // 1. Armar fila para "Nómina"
+            const trNom = document.createElement('tr');
+            trNom.dataset.id = id;
+            trNom.innerHTML = `
+                <td><span class="cedula-badge">${escHtml(data.cedula || '—')}</span></td>
+                <td><strong>${escHtml(data.nombre || '—')}</strong></td>
+                <td>${escHtml(data.edad || '—')}</td>
+                <td><span class="cat-tag ${catClass(data.categoria || '—')}">${escHtml(data.categoria || '—')}</span></td>
+                <td>${escHtml(data.equino || '—')}</td>
+                <td>${escHtml(data.propietario || '—')}</td>
+                <td><button class="btn-icon delete-btn" onclick="eliminarColeador(this)" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button></td>
+            `;
+            tbodyNomina.appendChild(trNom);
+
+            // 2. Armar fila para "Cómputos de Manga"
+            const guardadoE = valoresActuales[id]?.e || "0";
+            const guardadoN = valoresActuales[id]?.n || "0";
+            const guardadoA = valoresActuales[id]?.a || "0";
+            const guardadoSP = valoresActuales[id]?.sp || "0";
+            const puntaje = calcularPuntaje(parseInt(guardadoE), parseInt(guardadoN), parseInt(guardadoA), parseInt(guardadoSP));
+            const colorPuntaje = puntaje < 0 ? '#ef4444' : puntaje > 0 ? '#059669' : 'inherit';
+
+            computosHTML += `
+                <tr data-comp-id="${id}">
+                    <td><strong>${escHtml(data.nombre || '—')}</strong><br><small class="equino-sub">Equino: ${escHtml(data.equino || '—')}</small></td>
+                    <td><input type="number" class="comp-input e-input" id="e-${id}" value="${guardadoE}" min="0"></td>
+                    <td><input type="number" class="comp-input n-input" id="n-${id}" value="${guardadoN}" min="0"></td>
+                    <td><input type="number" class="comp-input a-input" id="a-${id}" value="${guardadoA}" min="0"></td>
+                    <td><input type="number" class="comp-input sp-input" id="sp-${id}" value="${guardadoSP}" min="0"></td>
+                    <td><span class="puntaje-display" id="p-${id}" style="color:${colorPuntaje}">${puntaje.toFixed(1)}</span></td>
+                    <td><button class="btn btn-sm" onclick="guardarComputo('${id}')">Guardar</button></td>
+                </tr>
+            `;
+        });
+        
+        if (tbodyComputos) tbodyComputos.innerHTML = computosHTML;
+        
+        actualizarContador();
+        reasignarListenersInputs();
+        actualizarTablaTotales(); // Actualiza estadísticas automáticamente
+    }, (error) => {
+        console.error(error);
+        if(error.code === 'permission-denied') {
+            mostrarToast('⚠️ Permisos de BD denegados. Cambie reglas a "Modo de Prueba".', 'error');
         }
     });
 }
 
+// Ejecutar Inicialización
 document.addEventListener('DOMContentLoaded', inicializar);
+
+// Exponer funciones globales
+window.toggleSidebar = toggleSidebar;
+window.switchTab = switchTab;
+window.autoCategoria = autoCategoria;
+window.addColeador = addColeador;
+window.eliminarColeador = eliminarColeador;
+window.generarSorteoInicial = generarSorteoInicial;
+window.generarSorteoDinamico = generarSorteoDinamico;
+window.guardarComputo = guardarComputo;
