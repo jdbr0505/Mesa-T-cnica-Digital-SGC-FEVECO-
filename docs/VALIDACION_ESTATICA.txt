@@ -1,0 +1,34 @@
+SGC FEVECO v3.0.0 — Validación estática
+Fecha: 2026-07-12
+
+[1] Sintaxis de módulos JavaScript activos
+OK js/app.js
+OK js/config/firebase.js
+OK js/core/constants.js
+OK js/core/hash.js
+OK js/core/state.js
+OK js/core/utils.js
+OK js/domain/draw-engine.js
+OK js/domain/ranking.js
+OK js/domain/scoring.js
+OK js/modules/audit.js
+OK js/modules/draws.js
+OK js/modules/events.js
+OK js/modules/exports.js
+OK js/modules/participants.js
+OK js/modules/scores.js
+OK js/modules/stats.js
+OK js/modules/ui.js
+OK js/services/audit.service.js
+OK js/services/backup.service.js
+OK js/services/draw.service.js
+OK js/services/event.service.js
+OK js/services/firestore.service.js
+OK js/services/participant.service.js
+OK js/services/score.service.js
+
+[2] Resolución de importaciones locales
+OK: todas las importaciones activas apuntan a archivos existentes.
+
+[3] Identificadores HTML estáticos
+OK: 83 identificadores HTML; todas las referencias estáticas activas están resueltas.

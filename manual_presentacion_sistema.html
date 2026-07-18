@@ -1,271 +1,160 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Técnico y Guía de Uso del Sistema - Coleo Digital</title>
-    <style>
-        :root {
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --sky-500: #0ea5e9;
-            --bg-clean: #ffffff;
-            --bg-tint: #f8fafc;
-            --border-light: #e2e8f0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-tint);
-            color: var(--slate-700);
-            line-height: 1.6;
-            display: flex;
-        }
-
-        /* Sidebar Manual */
-        .sidebar-manual {
-            width: 320px;
-            background-color: var(--slate-900);
-            color: white;
-            position: fixed;
-            height: 100vh;
-            padding: 30px 20px;
-            overflow-y: auto;
-        }
-
-        .sidebar-manual h3 {
-            font-size: 18px;
-            color: #f8fafc;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-manual p {
-            font-size: 12px;
-            color: var(--sky-500);
-            margin-bottom: 24px;
-        }
-
-        .menu-manual {
-            list-style: none;
-        }
-
-        .menu-manual li {
-            margin-bottom: 12px;
-        }
-
-        .menu-manual a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 14px;
-            display: block;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .menu-manual a:hover {
-            background-color: var(--slate-800);
-            color: white;
-        }
-
-        /* Main Content area */
-        .main-doc {
-            margin-left: 320px;
-            padding: 50px 80px;
-            max-width: 1000px;
-            width: 100%;
-            background-color: var(--bg-clean);
-            min-height: 100vh;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.02);
-        }
-
-        h1 {
-            font-size: 32px;
-            color: var(--slate-900);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 16px;
-            color: var(--sky-500);
-            margin-bottom: 40px;
-            font-weight: 500;
-        }
-
-        h2 {
-            font-size: 22px;
-            color: var(--slate-900);
-            margin-top: 40px;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--sky-500);
-            padding-left: 12px;
-        }
-
-        p {
-            font-size: 15px;
-            margin-bottom: 16px;
-            text-align: justify;
-        }
-
-        ul, ol {
-            margin-left: 24px;
-            margin-bottom: 16px;
-            font-size: 15px;
-        }
-
-        li {
-            margin-bottom: 6px;
-        }
-
-        /* Technical code presentation block */
-        .code-box {
-            background-color: #f1f5f9;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 16px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            color: #0f172a;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-
-        .callout {
-            background-color: #ecfdf5;
-            border-left: 4px solid #10b981;
-            padding: 16px;
-            border-radius: 0 8px 8px 0;
-            margin: 20px 0;
-        }
-
-        .callout-title {
-            font-weight: bold;
-            color: #065f46;
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-
-        .callout-body {
-            font-size: 14px;
-            color: #047857;
-        }
-
-        footer {
-            margin-top: 6px;
-            border-top: 1px solid var(--border-light);
-            padding-top: 20px;
-            font-size: 12px;
-            color: #94a3b8;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual técnico y de usuario — SGC FEVECO v3</title>
+<style>
+:root{--ink:#172033;--muted:#5f6b7a;--line:#dbe2ea;--navy:#11162f;--red:#e94560;--green:#059669;--paper:#fff;--bg:#eef2f6}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.55}.doc{width:min(1000px,calc(100% - 32px));margin:30px auto;background:var(--paper);box-shadow:0 16px 45px rgba(15,23,42,.12);padding:54px 64px}.cover{border-bottom:4px solid var(--red);padding-bottom:30px;margin-bottom:36px}.kicker{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700}.cover h1{font-size:36px;line-height:1.1;margin:10px 0}.cover p{color:var(--muted);font-size:17px}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.meta div{border:1px solid var(--line);padding:12px;border-radius:8px}.meta strong{display:block;font-size:11px;text-transform:uppercase;color:var(--muted)}h2{font-size:24px;margin-top:38px;border-bottom:1px solid var(--line);padding-bottom:8px}h3{font-size:18px;margin-top:25px}.note,.warning,.success{padding:14px 16px;border-radius:8px;margin:16px 0}.note{background:#eff6ff;border-left:4px solid #2563eb}.warning{background:#fff7ed;border-left:4px solid #ea580c}.success{background:#ecfdf5;border-left:4px solid var(--green)}code,pre{font-family:Consolas,monospace}pre{background:#111827;color:#e5e7eb;padding:18px;border-radius:8px;overflow:auto}table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:#f8fafc;text-align:left}.checklist li{margin:7px 0}.toc a{color:#1d4ed8;text-decoration:none}.small{font-size:12px;color:var(--muted)}@media print{body{background:#fff}.doc{box-shadow:none;margin:0;width:100%;padding:20mm}.no-print{display:none}h2{break-after:avoid}table,pre{break-inside:avoid}}@media(max-width:700px){.doc{padding:28px 22px}.meta{grid-template-columns:1fr}.cover h1{font-size:29px}}
+</style>
 </head>
 <body>
+<main class="doc">
+<section class="cover">
+<div class="kicker">Federación Venezolana de Coleo · Mesa Técnica Digital</div>
+<h1>Manual técnico y de usuario<br>SGC FEVECO v3.0.0</h1>
+<p>Gestión modular de temporadas, eventos, atletas, mangas, cómputos, resultados, sorteos verificables, auditoría y respaldo.</p>
+<div class="meta"><div><strong>Versión</strong>3.0.0</div><div><strong>Actualización</strong>Julio de 2026</div><div><strong>Base de datos</strong>Firebase Firestore</div></div>
+</section>
 
-    <div class="sidebar-manual">
-        <h3>Manual de Uso</h3>
-        <p>Documentación de Usuario e Ingeniería</p>
-        <ul class="menu-manual">
-            <li><a href="#arquitectura">1. Arquitectura General</a></li>
-            <li><a href="#modulo1">2. Registro de Coleadores</a></li>
-            <li><a href="#modulo2">3. Sorteo Estocástico</a></li>
-            <li><a href="#modulo3">4. Cómputos Métricos</a></li>
-            <li><a href="#modulo4">5. Sorteo Dinámico Avanzado</a></li>
-            <li><a href="#operacion">6. Guía de Operación Diaria</a></li>
-        </ul>
-    </div>
+<section class="toc">
+<h2>Contenido</h2>
+<ol>
+<li><a href="#alcance">Alcance de la actualización</a></li>
+<li><a href="#arquitectura">Arquitectura modular</a></li>
+<li><a href="#datos">Modelo de datos</a></li>
+<li><a href="#operacion">Procedimiento de operación</a></li>
+<li><a href="#sorteos">Sorteos verificables e inmutables</a></li>
+<li><a href="#ranking">Puntuación y desempate</a></li>
+<li><a href="#auditoria">Auditoría</a></li>
+<li><a href="#exportacion">Exportación y respaldo</a></li>
+<li><a href="#pruebas">Pruebas de aceptación</a></li>
+<li><a href="#limitaciones">Alcance no incluido</a></li>
+</ol>
+</section>
 
-    <div class="main-doc">
-        <h1>Manual de Uso e Ingeniería del Sistema</h1>
-        <div class="subtitle">Guía Metodológica para la Automatización de Competencias de Toros Coleados</div>
+<section id="alcance">
+<h2>1. Alcance de la actualización</h2>
+<p>La versión 3 sustituye el archivo JavaScript monolítico y el HTML de una sola pieza por una aplicación organizada en capas. Los registros dejan de almacenarse en una colección global y pasan a estar asociados a una temporada y un evento. Los cómputos se guardan por manga, los resultados se recalculan y persisten, y cada acción relevante genera una entrada de auditoría.</p>
+<div class="success"><strong>Resultado:</strong> al recargar la página no se pierden los cómputos, resultados, sorteos ni la selección del evento activo.</div>
+</section>
 
-        <section id="arquitectura">
-            <h2>1. Arquitectura General del Sistema</h2>
-            <p>
-                El software ha sido diseñado bajo patrones arquitectónicos modernos de desarrollo industrial, garantizando desacoplamiento, alta cohesión y robustez matemática. Siguiendo los principios de ingeniería de Roger Pressman, la solución implementa una arquitectura limpia distribuida en capas:
-            </p>
-            <ul>
-                <li><strong>Capa de Presentación (Frontend):</strong> Desarrollada con interfaces nativas semánticas y estilizadas interactivas para una respuesta inmediata.</li>
-                <li><strong>Capa de Lógica de Negocios (Backend):</strong> Motorizado mediante un núcleo algorítmico robusto que gestiona las reglas oficiales de la Federación Venezolana de Coleo (FEVECO).</li>
-                <li><strong>Capa de Persistencia (Base de Datos):</strong> Un modelo híbrido relacional SQL para auditorías permanentes de resultados históricos y un nodo NoSQL en tiempo real para la transmisión inmediata a pantallas de la manga.</li>
-            </ul>
-        </section>
+<section id="arquitectura">
+<h2>2. Arquitectura modular</h2>
+<table><thead><tr><th>Capa</th><th>Carpeta</th><th>Responsabilidad</th></tr></thead><tbody>
+<tr><td>Presentación HTML</td><td><code>partials/</code></td><td>Pantallas independientes: eventos, registro, sorteos, cómputos, estadísticas, auditoría y exportación.</td></tr>
+<tr><td>Controladores de interfaz</td><td><code>js/modules/</code></td><td>Eventos de usuario, validaciones visuales, renderizado de tablas y mensajes.</td></tr>
+<tr><td>Dominio</td><td><code>js/domain/</code></td><td>Puntuación, ranking, detección de empates y motores de sorteo.</td></tr>
+<tr><td>Servicios</td><td><code>js/services/</code></td><td>Lectura y escritura de Firestore, transacciones, auditoría, migración y respaldo.</td></tr>
+<tr><td>Núcleo</td><td><code>js/core/</code></td><td>Estado global, constantes, utilidades, normalización y SHA-256.</td></tr>
+</tbody></table>
+<pre>sistema_coleo.html
+ ├─ partials/*.html
+ ├─ css/legacy.css + css/v3.css
+ └─ js/app.js
+     ├─ modules/
+     ├─ domain/
+     ├─ services/
+     └─ core/</pre>
+</section>
 
-        <section id="modulo1">
-            <h2>2. Módulo 1: Gestión e Inscripción de Atletas</h2>
-            <p>
-                Este módulo digitaliza el proceso clásico de registro. Captura las entidades esenciales mapeadas en el modelo relacional:
-            </p>
-            <ol>
-                <li><strong>Coleador:</strong> Identificado por su Cédula de Identidad como clave primaria inequívoca.</li>
-                <li><strong>Equino (Caballo):</strong> Registrado individualmente por nombre y trazabilidad de rendimiento.</li>
-                <li><strong>Propietario / Entidad:</strong> Asignación lógica que permite auditorías de procedencia del animal.</li>
-            </ol>
-            <div class="callout">
-                <div class="callout-title">Garantía de Integridad Referencial</div>
-                <div class="callout-body">La base de datos bloquea automáticamente inscripciones duplicadas de un mismo atleta o equino dentro del mismo torneo, eliminando los errores humanos comunes de las planillas en papel.</div>
-            </div>
-        </section>
+<section id="datos">
+<h2>3. Modelo de datos en Firestore</h2>
+<pre>temporadas/{temporadaId}
+eventos/{eventoId}
+  ├─ participantes/{cedulaNormalizada}
+  ├─ indices/cedula_{cedulaNormalizada}
+  ├─ indices/equino_{equinoNormalizado}
+  ├─ mangas/{mangaId}
+  │    └─ computos/{participanteId}
+  ├─ resultados/{participanteId}
+  ├─ sorteos/primera-salida
+  ├─ sorteos/segunda-salida
+  └─ auditoria/{movimientoId}
+auditoria_sistema/{movimientoId}</pre>
+<p>Los documentos de índice permiten impedir duplicados de cédula y de equino mediante una transacción. El identificador del participante se forma normalizando la cédula; por ejemplo, <code>V-12.345.678</code> se convierte en <code>V12345678</code>.</p>
+</section>
 
-        <section id="modulo2">
-            <h2>3. Módulo 2: Sorteo Estocástico Inicial</h2>
-            <p>
-                Para la primera salida, el sistema implementa un algoritmo de aleatoriedad controlada. Este proceso asegura transparencia total. Técnicamente, toma el arreglo indexado de coleadores inscritos y aplica un algoritmo de barajado uniforme.
-            </p>
-            <div class="code-box">
-// Pseudocódigo del Motor de Aleatoriedad (1ra Salida)
-Función GenerarSorteoInicial(ListaColeadores) {
-    Para i desde ListaColeadores.Longitud - 1 hasta 1:
-        j = GenerarEnteroAleatorio(0, i)
-        Intercambiar(ListaColeadores[i], ListaColeadores[j])
-    Retornar AgruparEnBloquesDeCuatro(ListaColeadores)
-}
-            </div>
-        </section>
+<section id="operacion">
+<h2>4. Procedimiento de operación</h2>
+<h3>4.1 Iniciar el sistema</h3>
+<ol><li>Ejecutar <code>iniciar_sistema.bat</code> en Windows o <code>iniciar_sistema.sh</code> en Linux/macOS.</li><li>Abrir <code>http://localhost:5500/sistema_coleo.html</code>.</li><li>Esperar el mensaje de inicialización correcta.</li></ol>
+<div class="note">No debe abrirse directamente con <code>file://</code>, porque los fragmentos HTML y los módulos de JavaScript requieren un servidor local.</div>
+<h3>4.2 Crear temporada y evento</h3>
+<ol><li>Abrir <strong>Eventos y temporadas</strong>.</li><li>Crear la temporada.</li><li>Crear el evento, seleccionando fecha, lugar, modalidad y categoría.</li><li>El sistema crea automáticamente las mangas “Primera salida” y “Segunda salida”.</li></ol>
+<h3>4.3 Registrar atletas</h3>
+<ol><li>Seleccionar el evento activo.</li><li>Indicar nombre, cédula, fecha de nacimiento, sexo, asociación, equino y propietario.</li><li>Verificar la edad y categoría calculadas automáticamente.</li><li>Guardar la inscripción.</li></ol>
+<p>Después del primer sorteo la nómina queda bloqueada por la interfaz. Antes del sorteo se puede retirar o reactivar un atleta sin borrar su historial.</p>
+<h3>4.4 Migrar registros antiguos</h3>
+<p>El botón <strong>Migrar nómina antigua</strong> copia la colección raíz <code>coleadores</code> al evento activo. Omite cédulas y equinos duplicados, crea los índices y registra el resultado en auditoría.</p>
+<h3>4.5 Registrar cómputos</h3>
+<ol><li>Seleccionar la manga.</li><li>Introducir efectivas, nulas, sanciones y saques de puerta.</li><li>Revisar la vista previa del puntaje.</li><li>Presionar <strong>Guardar todos</strong>.</li></ol>
+<p>El guardado escribe cada cómputo, recalcula la clasificación acumulada y actualiza los resultados persistentes.</p>
+</section>
 
-        <section id="modulo3">
-            <h2>4. Módulo 3: Captura de Cómputos Métricos</h2>
-            <p>
-                Este módulo duplica digitalmente la estructura analógica de las planillas oficiales de manga de FEVECO. La mesa técnica introduce los valores recolectados por los jueces de manga durante los 4 minutos reglamentarios del turno:
-            </p>
-            <ul>
-                <li><strong>Coleadas Efectivas (Puntaje Positivo):</strong> Suma directa de puntos al atleta.</li>
-                <li><strong>Coleadas Nulas (Puntaje Negativo):</strong> Penalización algorítmica inmediata en la tabla general.</li>
-                <li><strong>Amonestaciones y Saques de Puerta:</strong> Métricas de control de disciplina que actúan como variables de desempate secundario.</li>
-            </ul>
-        </section>
+<section id="sorteos">
+<h2>5. Sorteos verificables e inmutables</h2>
+<h3>5.1 Primera salida</h3>
+<p>El sistema genera una semilla con <code>crypto.getRandomValues()</code>, calcula el hash SHA-256 de la nómina, aplica un Fisher–Yates determinista y organiza grupos de cuatro intentando evitar asociaciones repetidas en el mismo turno.</p>
+<h3>5.2 Evidencias almacenadas</h3>
+<ul><li>Versión del algoritmo.</li><li>Semilla.</li><li>Hash de la fuente.</li><li>Hash del resultado.</li><li>Número de atletas.</li><li>Turnos y puestos.</li><li>Fecha de creación.</li><li>Número de conflictos de asociación inevitables.</li></ul>
+<h3>5.3 Verificación</h3>
+<p>El botón <strong>Verificar integridad</strong> vuelve a ejecutar el algoritmo usando la semilla almacenada y compara nómina, turnos y hashes. Si algún dato no coincide, la verificación falla.</p>
+<div class="warning"><strong>Importante:</strong> la aplicación impide sobrescribir un sorteo ya creado. Como las reglas de Firestore no fueron modificadas, un administrador con acceso directo a la consola todavía podría alterar documentos. El hash permite detectar esa alteración.</div>
+<h3>5.4 Segunda salida</h3>
+<p>Se ordena la clasificación por mérito reglamentario y se almacena la fuente y el resultado con SHA-256. Los empates exactos se conservan marcados y no se resuelven arbitrariamente.</p>
+</section>
 
-        <section id="modulo4">
-            <h2>5. Módulo 4: Algoritmo de Sorteo Dinámico (Segunda Salida)</h2>
-            <p>
-                A diferencia del primer sorteo, la segunda salida es completamente determinista y dinámica. El sistema ejecuta una consulta estructurada que ordena a todos los participantes por su puntuación neta acumulada de forma descendente.
-            </p>
-            <p>
-                Posteriormente, el algoritmo redistribuye a los coleadores emparejando a los de alto rendimiento en los primeros turnos ("Turnos de Élite") y así sucesivamente, lo cual eleva la competitividad del espectáculo deportivo de acuerdo con los estándares internacionales de gestión de torneos.
-            </p>
-        </section>
+<section id="ranking">
+<h2>6. Puntuación y criterios de desempate</h2>
+<p>La configuración predeterminada aplica la base del Reglamento de Competencia FEVECO de marzo de 2026:</p>
+<table><thead><tr><th>Dato</th><th>Tratamiento</th></tr></thead><tbody><tr><td>Coleada efectiva</td><td>1 punto</td></tr><tr><td>Coleada nula</td><td>0 puntos y se incorpora al total bruto para efectividad</td></tr><tr><td>Sanción</td><td>Descuento de 1 punto por cada unidad registrada</td></tr><tr><td>Saque de puerta</td><td>Renglón independiente; no suma al puntaje base</td></tr><tr><td>Efectividad</td><td>(Efectivas netas / coleadas totales brutas) × 100</td></tr></tbody></table>
+<p>El orden automático se determina por:</p>
+<ol><li>Mayor puntuación.</li><li>Menor número de sanciones.</li><li>Mayor efectividad.</li><li>Mayor número de saques de puerta.</li></ol>
+<p>Cuando dos o más atletas siguen iguales en todos esos renglones, comparten posición y quedan marcados como <strong>empate reglamentario</strong>. La aplicación informa que debe realizarse el turno de desempate previsto en el artículo 69.</p>
+</section>
 
-        <section id="operacion">
-            <h2>6. Guía de Operación para la Exposición</h2>
-            <p><strong>Paso 1:</strong> Inicie la presentación mostrando el módulo de registro. Agregue un coleador ficticio para demostrar que la interfaz responde en tiempo real.</p>
-            <p><strong>Paso 2:</strong> Diríjase a la pestaña de "Sorteo Primera Salida" y presione el botón de ejecución para demostrar cómo el sistema automatiza la creación de turnos de manera limpia y sin intermediarios.</p>
-            <p><strong>Paso 3:</strong> Simule la carga de cómputos en la mesa técnica y guarde. Muestre de inmediato la tabla de posiciones consolidadas para evidenciar el cálculo automático de puntajes netos.</p>
-            <p><strong>Paso 4:</strong> Culmine la demostración ejecutando el Sorteo Dinámico para mostrar cómo el software reacciona inteligentemente a los datos de la primera fase.</p>
-        </section>
+<section id="auditoria">
+<h2>7. Auditoría de cambios</h2>
+<p>Se registran inscripciones, cambios de estado, guardado de cómputos, creación de mangas, sorteos, migraciones y restauraciones. Cada movimiento contiene fecha, acción, entidad, identificador, detalle, valores relevantes, origen y actor genérico “Mesa Técnica”.</p>
+<p>La pantalla permite filtrar por tipo de acción y exportar la bitácora como CSV.</p>
+</section>
 
-        <footer>
-            Documento de Ingeniería de Software - Confidencial del Proyecto. Desarrollado bajo estándares académicos y profesionales.
-        </footer>
-    </div>
+<section id="exportacion">
+<h2>8. Exportación y respaldo</h2>
+<table><thead><tr><th>Salida</th><th>Contenido</th></tr></thead><tbody>
+<tr><td>Nómina CSV</td><td>Atletas, categorías, asociaciones, equinos, propietarios y estado.</td></tr>
+<tr><td>Resultados CSV</td><td>Posiciones, métricas, puntaje, efectividad y condición de desempate.</td></tr>
+<tr><td>Auditoría CSV</td><td>Bitácora completa del evento.</td></tr>
+<tr><td>Informe PDF</td><td>Cabecera del evento, clasificación, nómina y hashes de sorteos.</td></tr>
+<tr><td>Respaldo JSON</td><td>Temporada, evento, participantes, mangas, cómputos, resultados, sorteos y auditoría.</td></tr>
+<tr><td>Restauración JSON</td><td>Crea una temporada y un evento nuevos sin sobrescribir datos existentes.</td></tr>
+</tbody></table>
+</section>
 
+<section id="pruebas">
+<h2>9. Pruebas de aceptación</h2>
+<table><thead><tr><th>#</th><th>Prueba</th><th>Resultado esperado</th></tr></thead><tbody>
+<tr><td>1</td><td>Crear temporada y evento.</td><td>Aparecen en selectores y se crean dos mangas.</td></tr>
+<tr><td>2</td><td>Registrar la misma cédula dos veces.</td><td>La segunda inscripción es rechazada.</td></tr>
+<tr><td>3</td><td>Registrar el mismo equino para dos atletas.</td><td>La segunda inscripción es rechazada.</td></tr>
+<tr><td>4</td><td>Guardar cómputos y recargar.</td><td>Los valores se recuperan desde Firestore.</td></tr>
+<tr><td>5</td><td>Generar el primer sorteo dos veces.</td><td>La segunda ejecución es rechazada.</td></tr>
+<tr><td>6</td><td>Verificar un sorteo sin cambios.</td><td>Integridad válida.</td></tr>
+<tr><td>7</td><td>Modificar directamente la nómina después del sorteo.</td><td>La verificación informa inconsistencia.</td></tr>
+<tr><td>8</td><td>Empatar en puntos, sanciones, efectividad y SP.</td><td>Ambos atletas comparten posición y aparece aviso de desempate.</td></tr>
+<tr><td>9</td><td>Exportar PDF y CSV.</td><td>Los archivos se descargan con datos del evento activo.</td></tr>
+<tr><td>10</td><td>Crear y restaurar respaldo.</td><td>Se crea un evento nuevo con los datos respaldados.</td></tr>
+</tbody></table>
+<p>Las pruebas automatizadas de lógica se ejecutan con <code>npm test</code>.</p>
+</section>
+
+<section id="limitaciones">
+<h2>10. Alcance no incluido</h2>
+<div class="warning"><p>Esta versión no incorpora autenticación, roles ni reglas de seguridad de Firestore, porque esos puntos fueron excluidos del alcance solicitado. Tampoco despliega cambios automáticamente en la consola de Firebase: el código crea colecciones y documentos al ejecutarse, pero el proyecto debe conservar permisos suficientes.</p></div>
+<p>Para una competencia oficial se recomienda validar con la autoridad técnica cualquier disposición transitoria aprobada en el congresillo y confirmar la interpretación exacta de las sanciones que deban convertirse en puntos o salidas.</p>
+<p class="small">Documento actualizado para SGC FEVECO v3.0.0.</p>
+</section>
+</main>
 </body>
 </html>

@@ -1,0 +1,59 @@
+SGC FEVECO v3.0.0 — Resultado de pruebas automatizadas
+Fecha de validación: 2026-07-12
+
+
+> sgc-feveco-v3@3.0.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: puntuación FEVECO base
+ok 1 - puntuación FEVECO base
+  ---
+  duration_ms: 0.921213
+  type: 'test'
+  ...
+# Subtest: ranking usa puntos, sanciones, efectividad y saque de puerta
+ok 2 - ranking usa puntos, sanciones, efectividad y saque de puerta
+  ---
+  duration_ms: 0.263609
+  type: 'test'
+  ...
+# Subtest: empate exacto queda identificado
+ok 3 - empate exacto queda identificado
+  ---
+  duration_ms: 6.420195
+  type: 'test'
+  ...
+# Subtest: categorías por edad y sexo
+ok 4 - categorías por edad y sexo
+  ---
+  duration_ms: 0.166065
+  type: 'test'
+  ...
+# Subtest: normalización de cédula y edad
+ok 5 - normalización de cédula y edad
+  ---
+  duration_ms: 0.616278
+  type: 'test'
+  ...
+# Subtest: sorteo inicial puede verificarse y detecta alteraciones
+ok 6 - sorteo inicial puede verificarse y detecta alteraciones
+  ---
+  duration_ms: 9.680518
+  type: 'test'
+  ...
+# Subtest: sorteo de segunda salida conserva el orden de mérito y es verificable
+ok 7 - sorteo de segunda salida conserva el orden de mérito y es verificable
+  ---
+  duration_ms: 2.840428
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 120.035433

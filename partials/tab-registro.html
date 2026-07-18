@@ -1,0 +1,25 @@
+<section id="tab-registro" class="tab-content" data-title="Registro de atletas y ejemplares">
+    <div class="card">
+        <div class="card-title"><span>Inscripción oficial del evento activo</span><span class="card-badge" id="registration-lock-badge">Abierto</span></div>
+        <div class="alert-info"><span><strong>Validaciones automáticas:</strong> cédula única, equino único por evento, categoría calculada por edad cumplida y sexo, y bloqueo de cambios luego del primer sorteo.</span></div>
+        <form id="participant-form">
+            <div class="form-grid">
+                <div class="form-group"><label for="col-nombre">Nombre y apellido</label><input id="col-nombre" required placeholder="Juan Pérez"></div>
+                <div class="form-group"><label for="col-cedula">Cédula</label><input id="col-cedula" required placeholder="V-12.345.678"></div>
+                <div class="form-group"><label for="col-fecha-nacimiento">Fecha de nacimiento</label><input id="col-fecha-nacimiento" type="date" required></div>
+                <div class="form-group"><label for="col-sexo">Sexo</label><select id="col-sexo" required><option value="M">Masculino</option><option value="F">Femenino</option></select></div>
+                <div class="form-group"><label for="col-edad">Edad al evento</label><input id="col-edad" readonly placeholder="Automática"></div>
+                <div class="form-group"><label for="col-categoria">Categoría FEVECO</label><input id="col-categoria" readonly placeholder="Automática"></div>
+                <div class="form-group"><label for="col-asociacion">Asociación / estado</label><input id="col-asociacion" required placeholder="Zulia"></div>
+                <div class="form-group"><label for="col-equino">Equino</label><input id="col-equino" required placeholder="El Relámpago"></div>
+                <div class="form-group"><label for="col-propietario">Propietario</label><input id="col-propietario" required placeholder="Ganadería Central"></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Inscribir coleador</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span>Nómina del evento</span><span class="badge-count" id="count-nomina">0</span></div>
+        <div class="table-responsive"><table><thead><tr><th>Cédula</th><th>Coleador</th><th>Edad</th><th>Categoría</th><th>Asociación</th><th>Equino</th><th>Propietario</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="tabla-nomina"></tbody></table></div>
+    </div>
+</section>

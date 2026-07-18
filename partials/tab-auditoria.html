@@ -1,0 +1,7 @@
+<section id="tab-auditoria" class="tab-content" data-title="Auditoría de cambios">
+    <div class="card">
+        <div class="card-title"><span>Bitácora inalterada por la interfaz</span><button class="btn btn-secondary btn-sm" id="btn-refresh-audit" type="button">Actualizar</button></div>
+        <div class="filter-row"><label class="context-field"><span>Filtrar acción</span><select id="audit-filter"><option value="">Todas</option><option value="CREAR">Creaciones</option><option value="ACTUALIZAR">Actualizaciones</option><option value="RETIRAR">Retiros</option><option value="SORTEO">Sorteos</option><option value="MIGRAR">Migraciones</option><option value="RESTAURAR">Restauraciones</option></select></label></div>
+        <div class="table-responsive"><table><thead><tr><th>Fecha</th><th>Acción</th><th>Entidad</th><th>Detalle</th><th>Origen</th></tr></thead><tbody id="audit-table"></tbody></table></div>
+    </div>
+</section>

@@ -1,0 +1,16 @@
+<section id="tab-computos" class="tab-content" data-title="Cómputos de manga">
+    <div class="card">
+        <div class="card-title"><span>Mesa técnica — registro persistente</span><span class="card-badge">FEVECO 2026</span></div>
+        <div class="toolbar-grid">
+            <label class="context-field wide"><span>Manga activa</span><select id="score-manga-select"></select></label>
+            <div class="button-row"><button class="btn btn-secondary" id="btn-create-manga" type="button">Nueva manga</button><button class="btn btn-success" id="btn-save-all-scores" type="button">Guardar todos</button></div>
+        </div>
+        <div class="alert-info"><span><strong>Puntuación base:</strong> coleada efectiva = 1 punto; nula = 0; cada sanción registrada resta 1 punto; el saque de puerta se conserva como renglón independiente. La efectividad se calcula como efectivas netas / coleadas totales brutas × 100.</span></div>
+        <div class="table-responsive"><table><thead><tr><th>Coleador / Equino</th><th>Efectivas</th><th>Nulas</th><th>Sanciones</th><th>Saque puerta</th><th>Puntaje neto</th><th>Estado</th></tr></thead><tbody id="tabla-computos-body"></tbody></table></div>
+    </div>
+    <div class="card">
+        <div class="card-title"><span>Clasificación acumulada del evento</span><span class="card-badge success-badge">Persistida</span></div>
+        <div id="tie-warning" class="warning-panel hidden"></div>
+        <div class="table-responsive"><table><thead><tr><th>Pos.</th><th>Coleador</th><th>Efectivas</th><th>Nulas</th><th>Sanciones</th><th>S.P.</th><th>Puntaje</th><th>Efectividad</th><th>Condición</th></tr></thead><tbody id="tabla-totales"></tbody></table></div>
+    </div>
+</section>

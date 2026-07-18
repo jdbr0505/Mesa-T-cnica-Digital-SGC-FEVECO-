@@ -1,0 +1,11 @@
+<section id="tab-exportar" class="tab-content" data-title="Exportar y respaldar">
+    <div class="page-intro"><div><h2>Planillas, PDF y respaldo</h2><p>Todos los archivos se generan desde el evento seleccionado y se descargan en el equipo del operador.</p></div></div>
+    <div class="export-grid">
+        <div class="card export-card"><h3>Nómina CSV</h3><p>Planilla de atletas, categorías, asociaciones, equinos y propietarios.</p><button class="btn btn-primary" id="btn-export-nomina" type="button">Descargar nómina</button></div>
+        <div class="card export-card"><h3>Resultados CSV</h3><p>Clasificación acumulada con criterios de desempate y métricas.</p><button class="btn btn-primary" id="btn-export-results" type="button">Descargar resultados</button></div>
+        <div class="card export-card"><h3>Informe PDF</h3><p>Resumen del evento, nómina, resultados, hashes de sorteos y firma técnica.</p><button class="btn btn-primary" id="btn-export-pdf" type="button">Generar PDF</button></div>
+        <div class="card export-card"><h3>Auditoría CSV</h3><p>Bitácora de modificaciones y acciones ejecutadas en el evento.</p><button class="btn btn-primary" id="btn-export-audit" type="button">Descargar auditoría</button></div>
+        <div class="card export-card"><h3>Respaldo JSON</h3><p>Copia integral de evento, mangas, cómputos, resultados, sorteos y auditoría.</p><button class="btn btn-success" id="btn-export-backup" type="button">Crear respaldo</button></div>
+        <div class="card export-card"><h3>Restaurar respaldo</h3><p>Importa un respaldo v3 como un evento nuevo, sin sobrescribir el evento activo.</p><label class="file-button">Seleccionar archivo<input id="backup-file-input" type="file" accept="application/json"></label></div>
+    </div>
+</section>

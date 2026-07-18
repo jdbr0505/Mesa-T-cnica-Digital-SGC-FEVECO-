@@ -1,0 +1,14 @@
+<section id="tab-sorteo1" class="tab-content" data-title="Sorteo verificable — primera salida">
+    <div class="card glass">
+        <div class="card-title"><span>Sorteo inicial verificable e inmutable</span><span class="card-badge">SHA-256</span></div>
+        <div class="alert-info"><span>El sistema genera una semilla criptográfica, ordena la nómina de forma determinista, intenta separar asociaciones dentro de cada turno y almacena los hashes de entrada y resultado. Una vez creado, la aplicación no permite sobrescribirlo.</span></div>
+        <div class="button-row">
+            <button class="btn btn-success" id="btn-generate-draw-1" type="button">Ejecutar sorteo inicial</button>
+            <button class="btn btn-secondary" id="btn-verify-draw-1" type="button">Verificar integridad</button>
+        </div>
+        <div id="draw-1-metadata" class="integrity-panel hidden"></div>
+    </div>
+    <div id="resultados-sorteo-1" class="hidden">
+        <div class="card"><div class="card-title"><span>Distribución de turnos — primera salida</span><span class="card-badge success-badge">Bloqueado</span></div><div id="turno-container-1"></div></div>
+    </div>
+</section>

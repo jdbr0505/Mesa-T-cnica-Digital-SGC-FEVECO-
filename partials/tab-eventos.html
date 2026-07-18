@@ -1,0 +1,50 @@
+<section id="tab-eventos" class="tab-content active" data-title="Eventos y temporadas">
+    <div class="page-intro">
+        <div>
+            <h2>Administración de temporadas y eventos</h2>
+            <p>Los datos se separan por temporada y por evento. Cada evento conserva su nómina, mangas, sorteos, cómputos, resultados y auditoría.</p>
+        </div>
+        <button class="btn btn-secondary" id="btn-migrate-legacy" type="button">Migrar nómina antigua</button>
+    </div>
+
+    <div class="two-column-grid">
+        <div class="card">
+            <div class="card-title"><span>Nueva temporada</span><span class="card-badge">Configuración</span></div>
+            <form id="season-form">
+                <div class="form-grid compact-grid">
+                    <div class="form-group"><label for="season-name">Nombre</label><input id="season-name" required placeholder="Temporada 2026"></div>
+                    <div class="form-group"><label for="season-year">Año</label><input id="season-year" type="number" min="2000" max="2100" required></div>
+                    <div class="form-group"><label for="season-start">Inicio</label><input id="season-start" type="date" required></div>
+                    <div class="form-group"><label for="season-end">Cierre</label><input id="season-end" type="date" required></div>
+                </div>
+                <button class="btn btn-primary" type="submit">Crear temporada</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span>Nuevo evento</span><span class="card-badge">Competencia</span></div>
+            <form id="event-form">
+                <div class="form-grid compact-grid">
+                    <div class="form-group"><label for="event-season">Temporada</label><select id="event-season" required></select></div>
+                    <div class="form-group"><label for="event-name">Nombre del evento</label><input id="event-name" required placeholder="Campeonato estadal"></div>
+                    <div class="form-group"><label for="event-date">Fecha</label><input id="event-date" type="date" required></div>
+                    <div class="form-group"><label for="event-location">Lugar / manga</label><input id="event-location" required placeholder="Manga de coleo"></div>
+                    <div class="form-group"><label for="event-type">Modalidad</label><select id="event-type"><option value="individual">Individual</option><option value="equipos">Por equipos</option></select></div>
+                    <div class="form-group"><label for="event-category">Categoría del evento</label><select id="event-category"><option value="mixta">Mixta / todas</option><option value="destete">Destete</option><option value="preinfantil">Preinfantil</option><option value="infantil">Infantil</option><option value="femenino">Femenino</option><option value="c">C</option><option value="b">B</option><option value="a">A</option><option value="aa">AA</option><option value="master">Máster</option><option value="supermaster">Supermaster</option></select></div>
+                </div>
+                <div class="form-group form-full"><label for="event-notes">Observaciones</label><textarea id="event-notes" rows="2" placeholder="Observaciones técnicas o administrativas"></textarea></div>
+                <button class="btn btn-primary" type="submit">Crear evento y mangas</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span>Temporadas registradas</span><span class="badge-count" id="season-count">0</span></div>
+        <div class="table-responsive"><table><thead><tr><th>Temporada</th><th>Año</th><th>Vigencia</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="season-table"></tbody></table></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><span>Eventos registrados</span><span class="badge-count" id="event-count">0</span></div>
+        <div class="table-responsive"><table><thead><tr><th>Evento</th><th>Temporada</th><th>Fecha</th><th>Lugar</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="event-table"></tbody></table></div>
+    </div>
+</section>
