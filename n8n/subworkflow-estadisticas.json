@@ -1,0 +1,57 @@
+{
+  "name": "SGC FEVECO - Tool - Estadisticas",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": []
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Cuando la llama la herramienta",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [-400, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://firestore.googleapis.com/v1/projects/{{$env.FIRESTORE_PROJECT_ID}}/databases/(default)/documents/coleadores?pageSize=300",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Obtener Coleadores",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-160, 0],
+      "credentials": {
+        "googleApi": {
+          "id": "REPLACE_WITH_GOOGLE_CREDENTIAL_ID",
+          "name": "Google Service Account - SGC FEVECO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const docs = ($input.first().json.documents) || [];\nconst total = docs.length;\nconst porCategoria = {};\n\nfor (const d of docs) {\n  const f = d.fields || {};\n  const cat = (f.categoria && f.categoria.stringValue) || 'Sin categoría';\n  porCategoria[cat] = (porCategoria[cat] || 0) + 1;\n}\n\nif (total === 0) {\n  return [{ json: { output: 'Todavía no hay coleadores inscritos en la nómina activa.' } }];\n}\n\nlet resumen = `📊 Estadísticas SGC FEVECO\\n\\nTotal de coleadores inscritos: ${total}\\n\\nPor categoría:\\n`;\nfor (const [cat, count] of Object.entries(porCategoria)) {\n  resumen += `• ${cat}: ${count}\\n`;\n}\n\nreturn [{ json: { output: resumen, total, porCategoria } }];"
+      },
+      "id": "a1b2c3d4-0003-4000-8000-000000000003",
+      "name": "Calcular Estadisticas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [80, 0]
+    }
+  ],
+  "connections": {
+    "Cuando la llama la herramienta": {
+      "main": [[{ "node": "Obtener Coleadores", "type": "main", "index": 0 }]]
+    },
+    "Obtener Coleadores": {
+      "main": [[{ "node": "Calcular Estadisticas", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "SGC FEVECO - Tool - Buscar Coleador",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "b1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Cuando la llama la herramienta",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [-400, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://firestore.googleapis.com/v1/projects/{{$env.FIRESTORE_PROJECT_ID}}/databases/(default)/documents/coleadores?pageSize=300",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "options": {}
+      },
+      "id": "b1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Obtener Coleadores",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-160, 0],
+      "credentials": {
+        "googleApi": {
+          "id": "REPLACE_WITH_GOOGLE_CREDENTIAL_ID",
+          "name": "Google Service Account - SGC FEVECO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const docs = ($input.first().json.documents) || [];\nconst query = ($('Cuando la llama la herramienta').first().json.query || '').toString().trim().toLowerCase();\n\nif (!query) {\n  return [{ json: { output: 'Indícame un nombre o número de cédula para buscar.' } }];\n}\n\nconst resultados = docs.filter(d => {\n  const f = d.fields || {};\n  const nombre = ((f.nombre && f.nombre.stringValue) || '').toLowerCase();\n  const cedula = ((f.cedula && f.cedula.stringValue) || '').toLowerCase();\n  return nombre.includes(query) || cedula.includes(query);\n});\n\nif (resultados.length === 0) {\n  return [{ json: { output: `No encontré ningún coleador que coincida con \"${query}\".` } }];\n}\n\nlet texto = `🔎 Resultados para \"${query}\":\\n\\n`;\nfor (const d of resultados) {\n  const f = d.fields || {};\n  const nombre = (f.nombre && f.nombre.stringValue) || '—';\n  const cedula = (f.cedula && f.cedula.stringValue) || '—';\n  const edad = (f.edad && f.edad.stringValue) || '—';\n  const categoria = (f.categoria && f.categoria.stringValue) || '—';\n  const equino = (f.equino && f.equino.stringValue) || '—';\n  const propietario = (f.propietario && f.propietario.stringValue) || '—';\n  texto += `• ${nombre} (${cedula})\\n  Edad: ${edad} — Categoría: ${categoria}\\n  Equino: ${equino} — Propietario: ${propietario}\\n\\n`;\n}\n\nreturn [{ json: { output: texto.trim() } }];"
+      },
+      "id": "b1b2c3d4-0003-4000-8000-000000000003",
+      "name": "Filtrar Resultados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [80, 0]
+    }
+  ],
+  "connections": {
+    "Cuando la llama la herramienta": {
+      "main": [[{ "node": "Obtener Coleadores", "type": "main", "index": 0 }]]
+    },
+    "Obtener Coleadores": {
+      "main": [[{ "node": "Filtrar Resultados", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

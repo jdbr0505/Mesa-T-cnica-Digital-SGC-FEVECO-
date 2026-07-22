@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro — SGC FEVECO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<div class="reg-wrapper">
+    <div class="reg-form-container">
+        <div class="reg-card">
+            <a href="sistema_coleo.html" class="back-link" title="Volver al inicio">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <span>Volver</span>
+            </a>
+
+            <div class="reg-header">
+                <div class="reg-logo">
+                    <svg fill="#ffffff" viewBox="0 0 29.791 29.791" width="36" height="36">
+                        <path d="M23.456,9.531c0.722-1.352,2.168-5.081-1.539-8.386c2.429,5.516-3.716,7.132-3.716,7.132l5.35,5.906c0,0,4.848,0.334,6.24-2.341C28.913,11.104,26.094,10.229,23.456,9.531z"/>
+                        <path d="M7.876,1.146c-3.707,3.305-2.261,7.032-1.54,8.386C3.696,10.229,0.878,11.104,0,11.844c1.394,2.675,6.24,2.341,6.24,2.341l5.35-5.906C11.59,8.277,5.447,6.662,7.876,1.146z"/>
+                        <path d="M8.024,13.625c-1.783,3.379,2.885,7.521,3.569,8.247c0.685,0.727-2.279,1.086-2.26,2.479c0.012,0.836,0.616,1.684,1.931,2.234c-0.014-0.103-0.04-0.198-0.04-0.304c0-0.206,0.069-0.399,0.125-0.596c-0.294-0.195-0.477-0.458-0.43-0.726c0.075-0.426,0.683-0.676,1.352-0.556c0.672,0.117,1.157,0.56,1.081,0.985c-0.022,0.128-0.103,0.232-0.206,0.324c-0.029,0.082-0.08,0.164-0.08,0.246c0,0.66,0.84,1.22,1.832,1.22c0.992,0,1.833-0.56,1.833-1.22c0-0.082-0.051-0.166-0.08-0.248c-0.104-0.09-0.182-0.194-0.205-0.322c-0.075-0.426,0.41-0.868,1.076-0.985c0.674-0.12,1.281,0.13,1.356,0.556c0.047,0.268-0.138,0.529-0.433,0.728c0.057,0.194,0.125,0.39,0.125,0.594c0,0.109-0.025,0.216-0.043,0.321c1.322-0.539,1.93-1.382,1.93-2.253c0-1.448-3.033-1.699-2.253-2.479c0.78-0.779,5.346-4.865,3.563-8.246l-3.566-5.349h-6.61L8.024,13.625z M9.816,15.591c-0.474-0.33-0.482-1.46-0.482-1.46s0.679,0.083,1.271,0.52c0.594,0.435,0.802,1.604,0.978,2.179C11.104,16.044,10.29,15.921,9.816,15.591z M19.188,14.65c0.592-0.437,1.271-0.52,1.271-0.52s-0.009,1.13-0.481,1.46c-0.475,0.33-1.289,0.453-1.767,1.236C18.385,16.253,18.594,15.085,19.188,14.65z"/>
+                        <path d="M16.957,25.263c0.137,0.214,0.219,0.449,0.219,0.701c0,0.92-1.019,1.664-2.277,1.664c-1.258,0-2.277-0.744-2.277-1.664c0-0.252,0.082-0.487,0.22-0.701c-0.233-0.104-0.42-0.225-0.56-0.355c-0.381,0.389-0.61,0.862-0.61,1.377c0,1.305,1.443,2.361,3.228,2.361c1.786,0,3.229-1.057,3.229-2.361c0-0.515-0.23-0.988-0.611-1.377C17.375,25.038,17.189,25.161,16.957,25.263z"/>
+                    </svg>
+                </div>
+                <h1>Crear Cuenta</h1>
+                <p>Regístrese en la Mesa Técnica Digital</p>
+            </div>
+
+            <form id="registroForm" autocomplete="off">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" placeholder="correo@ejemplo.com" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="regUsername">Usuario</label>
+                    <input type="text" id="regUsername" placeholder="Elija un nombre de usuario" required autocomplete="username">
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="regPassword">Contraseña</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="regPassword" placeholder="Mín. 8 caracteres" required autocomplete="new-password" minlength="8">
+                            <button type="button" class="toggle-password" data-target="regPassword" tabindex="-1" aria-label="Mostrar contraseña">
+                                <svg class="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-closed hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="regConfirm">Confirmar Contraseña</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="regConfirm" placeholder="Repita la contraseña" required autocomplete="new-password">
+                            <button type="button" class="toggle-password" data-target="regConfirm" tabindex="-1" aria-label="Mostrar contraseña">
+                                <svg class="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-closed hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="reg-btn">
+                    <span class="btn-text">Crear Cuenta</span>
+                    <span class="btn-spinner hidden">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg>
+                    </span>
+                </button>
+
+                <p class="switch-link">
+                    ¿Ya tiene cuenta? <a href="login.html">Inicie sesión aquí</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div class="reg-bg" style="background-image: url('images/images.jpg');">
+        <div class="reg-bg-content">
+            <h2>SGC FEVECO</h2>
+            <p>Únete a la Mesa Técnica Digital y gestiona registros, sorteos y cómputos oficiales de coleo en un solo lugar.</p>
+        </div>
+    </div>
+</div>
+
+<script src="registro.js"></script>
+</body>
+</html>

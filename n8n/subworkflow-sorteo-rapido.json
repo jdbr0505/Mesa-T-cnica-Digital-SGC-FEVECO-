@@ -1,0 +1,57 @@
+{
+  "name": "SGC FEVECO - Tool - Sorteo Rapido",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": []
+        }
+      },
+      "id": "d1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Cuando la llama la herramienta",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [-400, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://firestore.googleapis.com/v1/projects/{{$env.FIRESTORE_PROJECT_ID}}/databases/(default)/documents/coleadores?pageSize=300",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "options": {}
+      },
+      "id": "d1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Obtener Coleadores",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-160, 0],
+      "credentials": {
+        "googleApi": {
+          "id": "REPLACE_WITH_GOOGLE_CREDENTIAL_ID",
+          "name": "Google Service Account - SGC FEVECO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const docs = ($input.first().json.documents) || [];\n\nif (docs.length === 0) {\n  return [{ json: { output: 'No hay coleadores inscritos todavía, así que no se puede generar el sorteo.' } }];\n}\n\n// Fisher-Yates, igual que generarSorteoInicial() en script.js\nconst shuffled = [...docs];\nfor (let i = shuffled.length - 1; i > 0; i--) {\n  const j = Math.floor(Math.random() * (i + 1));\n  [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];\n}\n\nconst puestoNombres = ['1 (Coso)', '2 (Centro)', '3 (Tapón)', '4 (Puerta)'];\nlet texto = '🎲 Sorteo rápido (no oficial, solo referencial vía bot):\\n\\n';\n\nfor (let i = 0; i < shuffled.length; i += 4) {\n  const turnoNum = Math.floor(i / 4) + 1;\n  const grupo = shuffled.slice(i, i + 4);\n  texto += `TURNO ${turnoNum}\\n`;\n  grupo.forEach((d, idx) => {\n    const f = d.fields || {};\n    const nombre = (f.nombre && f.nombre.stringValue) || '—';\n    const equino = (f.equino && f.equino.stringValue) || '—';\n    texto += `  ${puestoNombres[idx]}: ${nombre} — ${equino}\\n`;\n  });\n  texto += '\\n';\n}\n\ntexto += 'Nota: este sorteo es una simulación rápida generada por el bot y no reemplaza ni bloquea el sorteo oficial dentro del sistema SGC FEVECO.';\n\nreturn [{ json: { output: texto.trim() } }];"
+      },
+      "id": "d1b2c3d4-0003-4000-8000-000000000003",
+      "name": "Generar Sorteo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [80, 0]
+    }
+  ],
+  "connections": {
+    "Cuando la llama la herramienta": {
+      "main": [[{ "node": "Obtener Coleadores", "type": "main", "index": 0 }]]
+    },
+    "Obtener Coleadores": {
+      "main": [[{ "node": "Generar Sorteo", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}
